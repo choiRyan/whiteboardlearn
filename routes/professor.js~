@@ -1,0 +1,8 @@
+exports.index(req,res){
+    res.render('/');
+};
+
+exports.professorsession(req,res){
+    //do function to check if the codes are unique
+    res.render('/professorsession');
+});

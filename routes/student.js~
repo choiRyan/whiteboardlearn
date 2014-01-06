@@ -1,0 +1,10 @@
+exports.index(req,res){
+    res.render('/');
+};
+
+exports.studentsession(req,res){
+    //do function to check if the codes match
+
+    //render the next page if successful, else back to orig
+    res.render('/studentsession');
+});

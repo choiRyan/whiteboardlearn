@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    
+    <title>Whiteboard</title>
+
+    <link rel="stylesheet" href="css/page_styles.css">
+    
+    <script src="js/vendor/custom.modernizr.js"></script>
+
+    <!-- Icons -->
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+	<!-- for iPad with high-resolution Retina display running iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152-precomposed.png">
+	<!-- for iPad with high-resolution Retina display running iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
+	<!-- for iPhone with high-resolution Retina display running iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="apple-touch-icon-120x120-precomposed.png">
+	<!-- for iPhone with high-resolution Retina display running iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+	<!-- for the iPad mini and the first- and second-generation iPad on iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="apple-touch-icon-76x76-precomposed.png">
+	<!-- for the iPad mini and the first- and second-generation iPad on iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+	<!-- for non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    
+    
+    <meta http-equiv="refresh" content="3; url=index.html" />
+
+</head>
+
+<body>
+    <div id="floater"></div>
+    <div id="vcontent">
+            <div id="animation_container">
+                <img src="img/ani_icon_1.png">
+                <p>Logging out...</p>
+            </div>
+    </div>
+</body>
+
+	<!-- jQuery -->
+	<script src="js/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("body").css("display", "none");
+     
+        $("body").fadeIn(1000);
+     
+        $("a.transition").click(function(event){
+            event.preventDefault();
+            linkLocation = this.href;
+            $("body").fadeOut(500, redirectPage);      
+        });
+             
+        function redirectPage() {
+            window.location = linkLocation;
+        }
+    });
+    </script>
+
+</html>
