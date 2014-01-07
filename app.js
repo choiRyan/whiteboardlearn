@@ -47,3 +47,6 @@ app.get('/professor', function(req,res){
 app.get('/student', function(req,res){
         res.render('student');
     });
+app.get('/professorsession', function(req,res){
+	res.render('professorsession');
+    });

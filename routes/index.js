@@ -8,7 +8,7 @@ exports.index = function ( req, res, next ){
   find().
   exec( function ( err, whiteboards ){
 	  if( err ) return next( err );
- 
+	  
 	  res.render( 'index', {
 		  title : 'Express Whiteboard Example',
 		      whiteboards : whiteboards
@@ -18,33 +18,36 @@ exports.index = function ( req, res, next ){
 
 exports.create = function ( req, res, next ){
     //TODO check if string code has already been taken
-	new Whiteboard({
-		code : req.body.code,
-		name : req.body.name,
-		students : 0
-	    }).save( function ( err ){
-		    
-		    if( err ){ 
-			console.log(err);
-			return next( err );	   
-		    }else{
-			res.redirect( '/professorsession' );
-		    }
-		});
+    Whiteboard.findOne(({code:req.body.code}),function(err,out){
+	    if(err){res.redirect('/');}
+	    if(out == null){
+		new Whiteboard({
+			code : req.body.code,
+			name : req.body.name,
+			students : 0
+		    }).save( function ( err, arr, count ){
+			    if( err ){ 
+				console.log(err);
+				return next( err );	   
+			    }else{
+				res.redirect( '/professorsession' );
+			    }
+			});
+	    }else{res.redirect('/professor');} // code already in use
+	});
 };
 
 //checks if code exists in database, and joins if so. else return '/'
 exports.join = function(req,res,next){
-    Whiteboard.find(
-    {'code':req.body.code}
-    ), function(err, whiteboard){
-	console ('worked');
-
-	if(err) res.redirect ('/');
+    Whiteboard.findOne(({code:{$in: [req.body.code]}}), function(err, out){
+	if(err){ res.redirect ('/');}
 	else{
-	    Whiteboard.update({'code':req.body.code}, {$inc:{'students':1}});
-     	    res.redirect('/studentsession');
+	    if(out != null){
+		Whiteboard.update({code:req.body.code}, {$inc:{'students':1}}).exec();
+		res.redirect('/studentsession');
+	    }else{
+		console.log('Session not found. Check code');
+	    }
 	}
-    }
-    next();
+    });
 }
