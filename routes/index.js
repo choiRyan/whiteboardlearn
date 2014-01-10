@@ -17,7 +17,6 @@ exports.index = function ( req, res, next ){
 };
 
 exports.create = function ( req, res, next ){
-    //TODO check if string code has already been taken
     Whiteboard.findOne(({code:req.body.code}),function(err,out){
 	    if(err){res.redirect('/professor#CodeTaken');}
 	    if(out == null){
@@ -55,9 +54,6 @@ exports.join = function(req,res,next){
 		req.session.professor = false;
 		req.session.student = true;
 		req.session.loggedin = true;
-		//res.locals.class_code = req.body.code;
-		//res.locals.class_name = out.name;
-		//console.log("name: " +res.locals.class_name+ " | code : " +res.locals.class_code); 
 		res.redirect('/studentsession');
 	    }else{
 		console.log('Session not found. Check code');
@@ -94,25 +90,3 @@ exports.clicker_make = function(req,res,next){
 	});
 }
   
-exports.sclicker_get = function(req,res,next){
-    Whiteboard.findOne(({code:req.session.code})).exec(function(err,out){
-	    if(err){
-		res.redirect('/studentsession');
-		console.log('ERROR: ' + err);
-	    }
-	    else if (out != null){
-		console.log(out);
-		console.log(out.ccq-1);
-		console.log(out.cq[out.ccq-1]);
-		req.session.q = out.cq[out.ccq-1].q;
-		req.session.o1 = out.cq[out.ccq-1].o1;
-		req.session.o2 = out.cq[out.ccq-1].o2;
-		req.session.o3 = out.cq[out.ccq-1].o3;
-		req.session.o4 = out.cq[out.ccq-1].o4;
-		res.redirect('/student_clicker');
-	    }else{
-	        res.redirect('/studentsession');
-		console.log('Could not find session by code');
-	    }
-    });
-}

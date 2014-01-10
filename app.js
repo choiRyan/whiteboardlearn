@@ -7,6 +7,9 @@ var path = require('path');
 var app = express();
 var engine = require('ejs-locals');
 var io = require('socket.io');
+var mongoose = require( 'mongoose' );
+var Whiteboard     = mongoose.model( 'Whiteboard' ); 
+
 
 // all environments
 app.set('port', process.env.PORT || 8080);
@@ -38,7 +41,6 @@ app.get('/', routes.index);
 app.post( '/create', routes.create); // from prof, makes session
 app.post( '/join', routes.join); // from student, joins session
 app.post( '/clicker_create', routes.clicker_make); // from prof, makes Q
-//app.post( '/sclicker_get', routes.sclicker_get); //gives Q to students
 //app.post( '/clicker_answer_click', routes.clicker_answer_a); //student answers
 
 http.createServer(app).listen(app.get('port'), function(){
@@ -66,8 +68,25 @@ app.get('/studentsession', function(req,res){
 app.get('/teacher_clicker', function(req,res){
 	res.render('teacher_clicker', {session:req.session});
     });
-app.get('/student_clicker', function(req,res){
-
-	console.log(req.session);
-	res.render('student_clicker', {session:req.session});
+app.get('/student_clicker', function(req,res){	
+	Whiteboard.findOne(({code:req.session.code})).exec(function(err,out){
+		if(err){
+		    res.redirect('/studentsession');
+		    console.log('ERROR: ' + err);
+		}
+		else if (out != null){
+		    console.log(out);
+		    console.log(out.ccq-1);
+		    console.log(out.cq[out.ccq-1]);
+		    req.session.q = out.cq[out.ccq-1].q;
+		    req.session.o1 = out.cq[out.ccq-1].o1;
+		    req.session.o2 = out.cq[out.ccq-1].o2;
+		    req.session.o3 = out.cq[out.ccq-1].o3;
+		    req.session.o4 = out.cq[out.ccq-1].o4;
+		    res.render('student_clicker', {session:req.session});
+		}else{
+		    res.redirect('/studentsession');
+		    console.log('Could not find session by code');
+		}
+	    });
     });
