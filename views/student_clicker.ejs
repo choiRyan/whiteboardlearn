@@ -36,16 +36,17 @@
 
 	<div class="row">
 		<div class="large-4 columns leftrow">
-			<h3><%= class_name %></h3>
-			<p class="center">Class code: <i><%= class_name %></i></p></p>
+			<h3><%= session.name %></h3>
+<% if(session.name){ %>
+			<p class="center">Class code: <i><%= session.code %></i></p><% } %>
 			<hr />
 			<div class="panel">
 				<ul class="side-nav">
-				  <h3><li class="active"><a href="student_clicker.html">Clicker</a></li></h3>
+				  <h3><li class="active">Clicker</li></h3>
 				  <p>See the current quiz.</p>
-				  <h3><li><a href="student_topics.html">Topics</a></li></h3>
+				  <h3><li><a href="/student_topics">Topics</a></li></h3>
 				  <p>Rate your understanding of the current class topics.</p>
-				  <h3><li><a href="student_questions.html">Questions</a></li></h3>
+				  <h3><li><a href="/student_questions">Questions</a></li></h3>
 				  <p>Suggest a question to your teacher or upvote questions suggested by your peers.</p>
 				</ul>
 			</div>
@@ -55,15 +56,17 @@
 			<div class="row">
 				<div class="large-12 columns rightrow">	
 						<hr />	
-						<h1>Clicker</h1>
+						<h1>Clicker <%= session.q%></h1>
 						<hr />
 						<!-- Grid Example -->
-
-						<h4>No current questions.</h4><br/>		
-						<p><a href="#" class="small success button choice">A</a> N/A</p>
+<% if(!session.q){ %>
+						<h4>No current questions.</h4><br/> <% }else{ %>
+						<h4><%= session.q %></h4><br/>
+						<p><a href="#" class="small success button choice"><%=  session.o1 %></a> N/A</p>
 						<p><a href="#" class="small success button choice">B</a> N/A</p>
 						<p><a href="#" class="small success button choice">C</a> N/A</p>
 						<p><a href="#" class="small success button choice">D</a> N/A</p>
+<% } %>
 				</div>
 			</div>
 	<hr />

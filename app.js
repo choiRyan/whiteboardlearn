@@ -31,19 +31,20 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.locals({code:"",name:""});
+
 //Routes
 app.get('/', routes.index);
 app.post( '/create', routes.create); // from prof, makes session
 app.post( '/join', routes.join); // from student, joins session
 app.post( '/clicker_create', routes.clicker_make); // from prof, makes Q
-//app.post( '/clicker_answer', routes.clicker_answer); // answers Q
+//app.post( '/sclicker_get', routes.sclicker_get); //gives Q to students
+//app.post( '/clicker_answer_click', routes.clicker_answer_a); //student answers
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-app.locals({class_code: "code", class_name:"name"});
-	
 app.get('/', function(req,res){
 	res.render('index');
     });
@@ -57,14 +58,16 @@ app.get('/student', function(req,res){
         res.render('student');
     });
 app.get('/professorsession', function(req,res){
-	res.render('professorsession');
+	res.render('professorsession', {session:req.session});
     });
 app.get('/studentsession', function(req,res){
-	res.render('studentsession');
+	res.render('studentsession', {session:req.session});
     });
 app.get('/teacher_clicker', function(req,res){
-	res.render('teacher_clicker');
+	res.render('teacher_clicker', {session:req.session});
     });
 app.get('/student_clicker', function(req,res){
-	res.render('student_clicker');
+
+	console.log(req.session);
+	res.render('student_clicker', {session:req.session});
     });

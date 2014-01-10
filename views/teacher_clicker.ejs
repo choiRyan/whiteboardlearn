@@ -36,8 +36,9 @@
 
 	<div class="row">
 		<div class="large-4 columns leftrow">
-			<h3>ECON205: Macroeconomics</h3>
-			<p class="center">Class code: <i>laissezfaire</i></p></p>
+			<h3><%= session.name %></h3>
+<% if(session.code){%>
+			<p class="center">Class code: <i><%= session.code %></i></p> <% } %>
 			<hr />
 			<div class="panel">
 				<ul class="side-nav">
