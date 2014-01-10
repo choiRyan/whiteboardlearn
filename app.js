@@ -41,6 +41,8 @@ app.post( '/clicker_create', routes.clicker_make); // from prof, makes Q
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+app.locals({class_code: "code", class_name:"name"});
 	
 app.get('/', function(req,res){
 	res.render('index');
@@ -57,6 +59,12 @@ app.get('/student', function(req,res){
 app.get('/professorsession', function(req,res){
 	res.render('professorsession');
     });
+app.get('/studentsession', function(req,res){
+	res.render('studentsession');
+    });
 app.get('/teacher_clicker', function(req,res){
 	res.render('teacher_clicker');
+    });
+app.get('/student_clicker', function(req,res){
+	res.render('student_clicker');
     });

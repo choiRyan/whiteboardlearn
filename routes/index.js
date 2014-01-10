@@ -50,6 +50,8 @@ exports.join = function(req,res,next){
 	    if(out != null){
 		Whiteboard.update({code:req.body.code}, {$inc:{'students':1}}).exec();
 		req.session.code = req.body.code;
+		res.locals.class_code = req.body.code;
+		res.locals.class_name = out.name;
 		res.redirect('/studentsession');
 	    }else{
 		console.log('Session not found. Check code');
