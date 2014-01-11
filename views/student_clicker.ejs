@@ -65,10 +65,15 @@
 						<hr />
 						<!-- Grid Example -->
 <% if(!session.q){ %>
-						<h4>No current questions.</h4><br/> <% }else{ %>
+						<h4>No current questions.</h4><br/> <% }if(session.q){ %>
 						<h4><%= session.q %></h4><br/>
-<!--only show options if student hasn't answered-->
-<!-- student_clicker_answered -->
+<!--voted. show results -->
+<% if(session.pickedA == 1){ %><p>You chose option A</p> <% } %>
+<% if(session.pickedB == 1){ %><p>You chose option B</p> <% } %>
+<% if(session.pickedC == 1){ %><p>You chose option C</p> <% } %>
+<% if(session.pickedD == 1){ %><p>You chose option D</p> <% } %>
+
+<% if(session.pickedA != 1 && session.pickedB != 1 && session.pickedC != 1 & session.pickedD != 1){ %> <!-- otherwise, show options-->
 						<% if(session.o1) { %><p><a href="student_clicker_answeredA" class="small success button choice">A</a><%= session.o1 %></p><% } %>
 
 						<% if(session.o2) { %><p><a href="student_clicker_answeredB" class="small success button choice">B</a><%= session.o2 %></p><% } %>
@@ -76,7 +81,7 @@
 						<% if(session.o3) { %><p><a href="student_clicker_answeredC" class="small success button choice">C</a><%= session.o3 %></p><% } %>
 
 						<% if(session.o4) { %><p><a href="student_clicker_answeredD" class="small success button choice">D</a><%= session.o4 %></p><% } %>
-<% } %>
+<%  } } %>
 				</div>
 			</div>
 	<hr />
