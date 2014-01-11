@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="clickerApp"> <!--<![endif]-->
 
 <head>
 	<meta charset="utf-8">
@@ -12,9 +12,14 @@
     <link rel="stylesheet" href="stylesheets/page_styles.css">
 
   <script src="javascripts/vendor/custom.modernizr.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js">
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8
+/angular-resource.min.js"></script>
+<script src="javascripts/core.js"></script>
 
 </head>
-<body>
+<body ng-controller="mainController">
 
 	<nav class="top-bar">
 	  <ul class="title-area">
@@ -37,7 +42,7 @@
 	<div class="row">
 		<div class="large-4 columns leftrow">
 			<h3><%= session.name %></h3>
-<% if(session.name){ %>
+<% if(session.code){ %>
 			<p class="center">Class code: <i><%= session.code %></i></p><% } %>
 			<hr />
 			<div class="panel">
@@ -62,14 +67,15 @@
 <% if(!session.q){ %>
 						<h4>No current questions.</h4><br/> <% }else{ %>
 						<h4><%= session.q %></h4><br/>
+<!--only show options if student hasn't answered-->
+<!-- student_clicker_answered -->
+						<% if(session.o1) { %><p><a href="student_clicker_answeredA" class="small success button choice">A</a><%= session.o1 %></p><% } %>
 
-						<% if(session.o1) { %><p><a href="#" class="small success button choice">A</a><%= session.o1 %></p><% } %>
+						<% if(session.o2) { %><p><a href="student_clicker_answeredB" class="small success button choice">B</a><%= session.o2 %></p><% } %>
 
-						<% if(session.o2) { %><p><a href="#" class="small success button choice">B</a><%= session.o2 %></p><% } %>
+						<% if(session.o3) { %><p><a href="student_clicker_answeredC" class="small success button choice">C</a><%= session.o3 %></p><% } %>
 
-						<% if(session.o3) { %><p><a href="#" class="small success button choice">C</a><%= session.o3 %></p><% } %>
-
-						<% if(session.o4) { %><p><a href="#" class="small success button choice">D</a><%= session.o4 %></p><% } %>
+						<% if(session.o4) { %><p><a href="student_clicker_answeredD" class="small success button choice">D</a><%= session.o4 %></p><% } %>
 <% } %>
 				</div>
 			</div>
@@ -90,7 +96,8 @@
   </script>
   
   <script src="javascripts/foundation.min.js"></script>
-  <!--
+ 
+ <!--
   
   <script src="js/foundation/foundation.js"></script>
   
