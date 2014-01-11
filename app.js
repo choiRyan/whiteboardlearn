@@ -85,10 +85,6 @@ app.get('/student_clicker', function(req,res){
     });
 app.get('/student_clicker_answeredA',function(req,res){
 	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
-		req.session.pickedA == 1;
-		req.session.pickedB == 0;
-		req.session.pickedC == 0;
-		req.session.pickedD == 0;
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
@@ -99,6 +95,10 @@ app.get('/student_clicker_answeredA',function(req,res){
 				console.log('error' + err);
 			    }
 			});
+		req.session.pickedA == 1;
+		req.session.pickedB == 0;
+		req.session.pickedC == 0;
+		req.session.pickedD == 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -108,10 +108,6 @@ app.get('/student_clicker_answeredA',function(req,res){
     });
 app.get('/student_clicker_answeredB',function(req,res){
 	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
-		req.session.pickedA == 0;
-		req.session.pickedB == 1;
-		req.session.pickedC == 0;
-		req.session.pickedD == 0;
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
@@ -122,6 +118,10 @@ app.get('/student_clicker_answeredB',function(req,res){
 				console.log('error' + err);
 			    }
 			});
+		req.session.pickedA == 0;
+		req.session.pickedB == 1;
+		req.session.pickedC == 0;
+		req.session.pickedD == 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -131,10 +131,6 @@ app.get('/student_clicker_answeredB',function(req,res){
 });
 app.get('/student_clicker_answeredC',function(req,res){
 	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
-		req.session.pickedA == 0;
-		req.session.pickedB == 0;
-		req.session.pickedC == 1;
-		req.session.pickedD == 0;
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
@@ -145,6 +141,10 @@ app.get('/student_clicker_answeredC',function(req,res){
 				console.log('error' + err);
 			    }
 			});
+		req.session.pickedA == 0;
+		req.session.pickedB == 0;
+		req.session.pickedC == 1;
+		req.session.pickedD == 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -154,10 +154,6 @@ app.get('/student_clicker_answeredC',function(req,res){
 });
 app.get('/student_clicker_answeredD',function(req,res){
 	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
-		req.session.pickedA == 0;
-		req.session.pickedB == 0;
-		req.session.pickedC == 0;
-		req.session.pickedD == 1;
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
@@ -168,6 +164,10 @@ app.get('/student_clicker_answeredD',function(req,res){
 				console.log('error' + err);
 			    }
 			});
+	 	req.session.pickedA == 0;
+		req.session.pickedB == 0;
+		req.session.pickedC == 0;
+		req.session.pickedD == 1;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
