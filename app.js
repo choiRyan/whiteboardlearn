@@ -106,3 +106,72 @@ app.get('/student_clicker_answeredA',function(req,res){
 		}
 	    });
     });
+app.get('/student_clicker_answeredB',function(req,res){
+	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
+		req.session.pickedA == 0;
+		req.session.pickedB == 1;
+		req.session.pickedC == 0;
+		req.session.pickedD == 0;
+		if(err){ res.redirect('/studentsession');
+		    console.log('ERROR ' + err);
+		}else if(out != null){
+		    console.log(out.cq[req.session.currentQ].r2);
+		    out.cq[req.session.currentQ].r2 = out.cq[req.session.currentQ].r2+1; // increment vote count by 1
+		    out.save(function(err){
+			    if(err){
+				console.log('error' + err);
+			    }
+			});
+		    res.render('student_clicker', {session:req.session});
+		   }else{
+		res.redirect('/student_session', {session:req.session});
+		console.log('Could not find session by code');
+		}
+	    });
+});
+app.get('/student_clicker_answeredC',function(req,res){
+	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
+		req.session.pickedA == 0;
+		req.session.pickedB == 0;
+		req.session.pickedC == 1;
+		req.session.pickedD == 0;
+		if(err){ res.redirect('/studentsession');
+		    console.log('ERROR ' + err);
+		}else if(out != null){
+		    console.log(out.cq[req.session.currentQ].r3);
+		    out.cq[req.session.currentQ].r3 = out.cq[req.session.currentQ].r3+1; // increment vote count by 1
+		    out.save(function(err){
+			    if(err){
+				console.log('error' + err);
+			    }
+			});
+		    res.render('student_clicker', {session:req.session});
+		   }else{
+		res.redirect('/student_session', {session:req.session});
+		console.log('Could not find session by code');
+		}
+	    });
+});
+app.get('/student_clicker_answeredD',function(req,res){
+	Whiteboard.findOne({code:req.session.code}).exec(function(err,out){
+		req.session.pickedA == 0;
+		req.session.pickedB == 0;
+		req.session.pickedC == 0;
+		req.session.pickedD == 1;
+		if(err){ res.redirect('/studentsession');
+		    console.log('ERROR ' + err);
+		}else if(out != null){
+		    console.log(out.cq[req.session.currentQ].r4);
+		    out.cq[req.session.currentQ].r4 = out.cq[req.session.currentQ].r4+1; // increment vote count by 1
+		    out.save(function(err){
+			    if(err){
+				console.log('error' + err);
+			    }
+			});
+		    res.render('student_clicker', {session:req.session});
+		   }else{
+		res.redirect('/student_session', {session:req.session});
+		console.log('Could not find session by code');
+		}
+	    });
+});
