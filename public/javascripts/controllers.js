@@ -1,20 +1,10 @@
-// Managing the poll list
-function PollListCtrl($scope) {
-    $scope.polls = [];
-}
-// Voting / viewing poll results
-function PollItemCtrl($scope, $routeParams) {
-    $scope.poll = {};
-    $scope.vote = function() {};
-}
-// Creating a new poll
-function PollNewCtrl($scope) {
-    $scope.poll = {
-	question: '',
-	choices: [{ text: '' }, { text: '' }, { text: '' }]
-    };
-    $scope.addChoice = function() {
-	$scope.poll.choices.push({ text: '' });
-    };
-    $scope.createPoll = function() {};
-}
+var wbApp = angular.module('wbApp', []);
+
+wbApp.controller('wbCtrl', function($scope){
+	$scope.submissions = [];
+	//gets all student-submitted questions and their upvotes
+	var class_code = $scope.code;
+	var Data = $resource('/partials/:code', {code: class_code});
+	//	var d = Data.get({
+	
+});

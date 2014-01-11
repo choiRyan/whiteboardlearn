@@ -1,6 +1,6 @@
 var mongoose = require( 'mongoose' );
 var Schema   = mongoose.Schema;
- 
+
 var Whiteboard = new Schema({
 	code : String,
 	name : String,
@@ -13,6 +13,7 @@ var Whiteboard = new Schema({
 	tq : [{ t:String, dist:[Number]}]
 	//teacher questions : topic, distribution
     });
+
 
 mongoose.model( 'Whiteboard', Whiteboard );
 mongoose.connect( 'mongodb://localhost/Whiteboard' );

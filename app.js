@@ -7,11 +7,59 @@ var path = require('path');
 var app = express();
 var engine = require('ejs-locals');
 var mongoose = require( 'mongoose' );
-var Whiteboard     = mongoose.model( 'Whiteboard' ); 
-
+var Whiteboard = mongoose.model( 'Whiteboard' ); 
 // all environments
 app.set('port', process.env.PORT || 8080);
 var server = http.createServer(app);
+
+//socket.io, for listening for server
+var io = require('socket.io').listen(server);
+server.listen(8080);
+
+io.sockets.on('connection',function(socket){
+     //io.sockets.emit('newStudentQ',{code:'che442',q:'heresquestion',ups:0});
+	socket.on('error',function(err){
+		console.log('socket error ' + err);
+		socket.destroy();
+	    });
+	//listens for new access queries for student Q viewing
+	socket.on('getStudentQuestions', function(data){
+		var ccode = data.code;
+		//look up Qs from mongoDB
+		Whiteboard.findOne({code:ccode}).exec(function(err,out){
+			if(err){
+			    console.log('ERROR: ' + err);
+			}else if(out != null){
+			    //send to all others
+			    io.sockets.emit('studentQuestionReload', out.sq);
+			}
+		    });
+	    });
+	//listens for new student Qs
+	socket.on('studentQasked',function(data){
+		console.log('received studentQasked:');
+		console.log(data);
+		//add this new question into our database~
+		Whiteboard.findOneAndUpdate(
+		    {code:data.code},
+	            {$push: {sq:{q:data.q,ups:0}}},
+		    {upsert:false},
+		    function(err,out){if(err){console.log('ERROR '+err);}else{
+			    var sqs = out.sq;
+			    var temp = {q:data.q,ups:0};
+			    sqs.concat(temp);
+			    //send the new Q AND prev Qs to everyone else also!
+			    io.sockets.emit('newStudentQ',sqs);
+			}
+	        });
+	    
+	});
+	socket.on('studentQupvoted',function(data){ // listens for s_Q upvotes
+      
+	});
+
+});
+
 
 app.engine('ejs',engine);
 app.set('views', path.join(__dirname, 'views'));
@@ -33,13 +81,24 @@ if ('development' == app.get('env')) {
 
 //Routes
 app.get('/', routes.index);
+//app.get('/partials/:name', routes.partials); // ANGULAR
 app.post( '/create', routes.create); // from prof, makes session
 app.post( '/join', routes.join); // from student, joins session
 app.post( '/clicker_create', routes.clicker_make); // from prof, makes Q
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+//http.createServer(app).listen(app.get('port'), function(){
+//  console.log('Express server listening on port ' + app.get('port'));
+//});
+
+//Routes that give Angular data
+//Gives all student-submitted questions 
+app.get('/getStudentQuestions', function(req,res){
+	var code = req.code;
+	Whiteboard.findOne({code:req.code}).exec(function(err, out){
+		if(err)return console.log("ERROR: " + err);	
+	return out.sq;
+	    });	
+    });
 
 app.get('/', function(req,res){
 	res.render('index');
@@ -59,6 +118,11 @@ app.get('/professorsession', function(req,res){
 app.get('/studentsession', function(req,res){
 	res.render('studentsession', {session:req.session});
     });
+
+app.get('/student_questions',function(req,res){
+	res.render('student_questions', {session:req.session});
+    });
+
 app.get('/teacher_clicker', function(req,res){
 	res.render('teacher_clicker', {session:req.session});
     });
@@ -70,7 +134,7 @@ app.get('/student_clicker', function(req,res){
 		}
 		else if (out != null){
 		    if(out.ccq != 0){
-			console.log(out);
+			//			console.log(out);
 		    req.session.currentQindex=out.ccq-1;
 		    req.session.currentQ=out.ccq-1;
 		    req.session.q = out.cq[out.ccq-1].q;

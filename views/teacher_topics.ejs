@@ -21,14 +21,14 @@
 	    <li class="name">
 	    	<ul><a href="#"><img src="images/header.png" id="header"></a></div></ul>
 	    </li>
-        <li class="toggle-topbar menu-icon"><a href="logout.html"><span>Menu</span></a></li>
+        <li class="toggle-topbar menu-icon"><a href="/logout"><span>Menu</span></a></li>
 	  </ul>
 
 	    <section class="top-bar-section">
 		    <!-- Left Nav Section -->
 		    <ul class="right">
 		    	<li class="divider"></li>
-			    <li style="text-align:center"><a href="logout.html" id ="exit">Exit Session</a></li>	
+			    <li style="text-align:center"><a href="/logout" id ="exit">Exit Session</a></li>	
 				<li class="divider"></li>  
 		 	</ul>
 	 	</section>
@@ -36,16 +36,18 @@
 
 	<div class="row">
 		<div class="large-4 columns leftrow">
-			<h3>ECON205: Macroeconomics</h3>
-			<p class="center">Class code: <i>laissezfaire</i></p></p>
+                 <h3><%= session.name %></h3>
+		 <% if(session.code){ %>
+                 <p class="center">Class code: <i><%= session.code %></i></p><% } %>
+
 			<hr />
 			<div class="panel">
 				<ul class="side-nav">
-				  <h3><li><a href="teacher_clicker.html">Clicker</a></li></h3>
+				  <h3><li><a href="/teacher_clicker">Clicker</a></li></h3>
 				  <p>Create another quiz or view quiz results.</p>
-				  <h3><li class="active"><a href="teacher_topics.html">Topics</a></li></h3>
+				  <h3><li class="active">Topics</li></h3>
 				  <p>View students' understanding of topics.</p>
-				  <h3><li><a href="teacher_questions.html">Questions</a></li></h3>
+				  <h3><li><a href="/teacher_questions">Questions</a></li></h3>
 				  <p>See student questions.</p>
 				</ul>
 			</div>
@@ -55,26 +57,33 @@
 			<h1>Topics</h1>
 			<hr />
 			<!-- Grid Example -->
-			<div class="row">
-				<div class="large-12 columns rightrow">					
-						<h4>Opportunity Cost</h4>	
-						<p>Display realtime ratings here</p>
-						<h4>Comparative Advantage</h4>	
-						<p>Display realtime ratings here</p>
-						<h4>Prisoner's Dilemma</h4>	
-						<p>Display realtime ratings here</p>
-						<hr />
-						<h4>Add another topic.</h4>	<br />
-						<form>	
-							<div class="small-10 columns">
-							    <input type="text" placeholder="Enter topic">
-							</div>
-							<div class="small-2 columns">
-							    <a href="#" class="button prefix">Submit</a>
-							</div>
-						</form>
-					</div>
-			</div>
+			<div ng-controller="appController">
+			  <div class="row">
+			    <div class="large-12 columns rightrow">
+			      <!-- display questions and ratings here-->
+			      <div ng-view>
+			      </div>
+
+			      <!--
+			      <h4>Opportunity Cost</h4>	
+			      <p>Display realtime ratings here</p>
+			      <h4>Comparative Advantage</h4>	
+			      <p>Display realtime ratings here</p>
+			      <h4>Prisoner's Dilemma</h4>	
+			      <p>Display realtime ratings here</p>
+			      <hr />
+			      <h4>Add another topic.</h4>	<br />-->
+			      <form>	
+				<div class="small-10 columns">
+				  <input type="text" placeholder="Enter topic">
+				</div>
+				<div class="small-2 columns">
+				  <a href="#" class="button prefix">Submit</a>
+				</div>
+			      </form>
+			    </div> <!-- large-12 columns -->
+			  </div> <!-- row -->
+			</div><!-- ng-controller -->
 	<hr />
 	<!--Bottom Bar of information-->
 	<div class="row">
@@ -92,6 +101,9 @@
   </script>
   
   <script src="javascripts/foundation.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8
+/angular-resource.min.js"></script>
   <!--
   
   <script src="js/foundation/foundation.js"></script>

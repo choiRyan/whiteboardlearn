@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app> <!--<![endif]-->
 
 <head>
 	<meta charset="utf-8">
@@ -10,12 +10,13 @@
   
     <link rel="stylesheet" href="stylesheets/foundation.css">
     <link rel="stylesheet" href="stylesheets/page_styles.css">
-
-  <script src="javascripts/vendor/custom.modernizr.js"></script>
+    <script src="javascripts/studentQ.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/vendor/custom.modernizr.js"></script>
 
 </head>
 <body>
-
+  <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
 	<nav class="top-bar">
 	  <ul class="title-area">
 	    <li class="name">
@@ -36,16 +37,17 @@
 
 	<div class="row">
 		<div class="large-4 columns leftrow">
-			<h3>ECON205: Macroeconomics</h3>
-			<p class="center">Class code: <i>laissezfaire</i></p></p>
+                 <h3><%= session.name %></h3>
+		 <% if(session.code){ %>
+                 <p class="center">Class code: <i><%= session.code %></i></p><% } %>
 			<hr />
 			<div class="panel">
 				<ul class="side-nav">
-				  <h3><li><a href="student_clicker.html">Clicker</a></li></h3>
+				  <h3><li><a href="/student_clicker">Clicker</li></h3>
 				  <p>See the current quiz.</p>
-				  <h3><li><a href="student_topics.html">Topics</a></li></h3>
+				  <h3><li><a href="/student_topics">Topics</a></li></h3>
 				  <p>Rate your understanding of the current class topics.</p>
-				  <h3><li class="active"><a href="student_questions.html">Questions</a></li></h3>
+				  <h3><li class="active">Questions</li></h3>
 				  <p>Suggest a question to your teacher or upvote questions suggested by your peers.</p>
 				</ul>
 			</div>
@@ -59,16 +61,28 @@
                 <hr>
 					<h4>Suggest a question.</h4>	<br />
 							<form>	
+<!-- begin submit a question -->
 							    <div class="small-10 columns">
-							        <input type="text" placeholder="Enter your question">
+							        <input type="text" placeholder="Enter your question" id="questionField">
 							    </div>
 							    <div class="small-2 columns">
-							        <a href="#" class="button prefix">Submit</a>
+							        <button class="button prefix" id="askQuestion" onclick="return false;">Ask!</button>
 							    </div>
+<!-- end submit a question-->
 							</form><hr />
 						<h4>Vote on questions.</h4>	<br />	
-							<p><a href="#" class="small success button choice">Upvote</a> Is opportunity cost only measured in money?</p>
-							<p><a href="#" class="small success button choice">Upvote</a> Can you give more examples of prisoner's dilemma?</p>
+<!-- socket/angular list and upvote questions begin here -->
+
+<!--<div ng-controller="wbCtrl">
+<input type="text" name=<%= session.code %> ng-model="code" style="display:none;"/>
+<p ng-repeat="submission in submissions">
+<a href="#" class="small success button choice">Upvote | {{submission.ups}}</a>{{submission.q}}
+</p>-->
+<div id="content"></div>
+<!--		    <p><a href="#" class="small success button choice">Upvote</a> Is opportunity cost only measured in money?</p>
+		    <p><a href="#" class="small success button choice">Upvote</a> Can you give more examples of prisoner's dilemma?</p>-->
+</div>
+<!-- end list and upvotes -->
 				</div>
 			</div>
 
@@ -76,7 +90,7 @@
 	<!--Bottom Bar of information-->
 	<div class="row">
 		<div class="large-12 columns">
-			<p style="text-align:center">2013 Whiteboard Learning &#153; &sdot; <a href="contact_us.html">Contact Us</a></p>
+			<p style="text-align:center">2013 Whiteboard Learning &#153; &sdot; <a href="/contact_us">Contact Us</a></p>
 		</div>
 	</div>
 
@@ -85,7 +99,6 @@
   ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
   '.js><\/script>')
   </script>
-  
   <script src="javascripts/foundation.min.js"></script>
   <!--
   
