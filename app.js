@@ -69,6 +69,8 @@ app.get('/student_clicker', function(req,res){
 		    console.log('ERROR: ' + err);
 		}
 		else if (out != null){
+		    if(out.ccq != 0){
+			console.log(out);
 		    req.session.currentQindex=out.ccq-1;
 		    req.session.currentQ=out.ccq-1;
 		    req.session.q = out.cq[out.ccq-1].q;
@@ -76,6 +78,7 @@ app.get('/student_clicker', function(req,res){
 		    req.session.o2 = out.cq[out.ccq-1].o2;
 		    req.session.o3 = out.cq[out.ccq-1].o3;
 		    req.session.o4 = out.cq[out.ccq-1].o4;
+		    }
 		    res.render('student_clicker', {session:req.session});
 		}else{
 		    res.redirect('/studentsession', {session:req.session});
@@ -95,10 +98,10 @@ app.get('/student_clicker_answeredA',function(req,res){
 				console.log('error' + err);
 			    }
 			});
-		req.session.pickedA == 1;
-		req.session.pickedB == 0;
-		req.session.pickedC == 0;
-		req.session.pickedD == 0;
+		    req.session.pickedA = 1;
+		    req.session.pickedB = 0;
+		    req.session.pickedC = 0;
+		    req.session.pickedD = 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -118,10 +121,10 @@ app.get('/student_clicker_answeredB',function(req,res){
 				console.log('error' + err);
 			    }
 			});
-		req.session.pickedA == 0;
-		req.session.pickedB == 1;
-		req.session.pickedC == 0;
-		req.session.pickedD == 0;
+		req.session.pickedA = 0;
+		req.session.pickedB = 1;
+		req.session.pickedC = 0;
+		req.session.pickedD = 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -141,10 +144,10 @@ app.get('/student_clicker_answeredC',function(req,res){
 				console.log('error' + err);
 			    }
 			});
-		req.session.pickedA == 0;
-		req.session.pickedB == 0;
-		req.session.pickedC == 1;
-		req.session.pickedD == 0;
+		req.session.pickedA = 0;
+		req.session.pickedB = 0;
+		req.session.pickedC = 1;
+		req.session.pickedD = 0;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});
@@ -164,10 +167,10 @@ app.get('/student_clicker_answeredD',function(req,res){
 				console.log('error' + err);
 			    }
 			});
-	 	req.session.pickedA == 0;
-		req.session.pickedB == 0;
-		req.session.pickedC == 0;
-		req.session.pickedD == 1;
+	 	req.session.pickedA = 0;
+		req.session.pickedB = 0;
+		req.session.pickedC = 0;
+		req.session.pickedD = 1;
 		    res.render('student_clicker', {session:req.session});
 		   }else{
 		res.redirect('/student_session', {session:req.session});

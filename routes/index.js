@@ -68,7 +68,6 @@ exports.clicker_make = function(req,res,next){
         var workingWith = out;
         if(err)console.log(err);
         else if(out != null){ 
-	    Whiteboard.update({code:req.session.code},{ccq:out.ccq+1}).exec(); 
 	    Whiteboard.findOneAndUpdate({code:req.session.code},{$push: {cq:{q:req.body.q, id: out.ccq,	o1:req.body.op1, o2:req.body.op2, o3:req.body.op3, o4:req.body.op4,r1:0, r2:0, r3:0, r4:0}
 		    }
 		},
