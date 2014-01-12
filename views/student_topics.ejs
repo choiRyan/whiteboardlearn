@@ -14,7 +14,8 @@
 
 </head>
 <body>
-
+  <!-- hidden text areas used for storing data... lol how do i middlewarez?? -->
+  <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
 	<nav class="top-bar">
 	  <ul class="title-area">
 	    <li class="name">
@@ -57,43 +58,21 @@
 						<hr />	
                             <h1>Topics</h1>
 						<hr />
-<!-- real-time updates of   -->
+<!-- real-time updates of topics (new questions pop up) -->
 <div id="content"></div>
-						<h4>Scarcity</h4>		
-							<ul id="Scarcity" class="button-group round even-5">
-							  <li><a href="#" id="one" class="small alert button">1</a></li>
-							  <li><a href="#" id="two" class="small orange button">2</a></li>
-							  <li><a href="#" id="three" class="small yellow button">3</a></li>
-							  <li><a href="#" id="four" class="small lime button">4</a></li>
-							  <li><a href="#" id="five" class="small success button">5</a></li>
-							</ul>
-						<h4>Opportunity Cost</h4>	
-							<ul id="OppCost" class="button-group round even-5">
-							  <li><a href="#" id="one" class="small alert button">1</a></li>
-							  <li><a href="#" id="two" class="small orange button">2</a></li>
-							  <li><a href="#" id="three" class="small yellow button">3</a></li>
-							  <li><a href="#" id="four" class="small lime button">4</a></li>
-							  <li><a href="#" id="five" class="small success button">5</a></li>
-							</ul>
-						<h4>Comparative Advantage</h4>	
-							<ul id="CompAdv" class="button-group round even-5">
-							  <li><a href="#" id="one" class="small alert button">1</a></li>
-							  <li><a href="#" id="two" class="small orange button">2</a></li>
-							  <li><a href="#" id="three" class="small yellow button">3</a></li>
-							  <li><a href="#" id="four" class="small lime button">4</a></li>
-							  <li><a href="#" id="five" class="small success button">5</a></li>
-							</ul>
-						<h4>Prisoner's Dilemma</h4>	
-							<ul id="PrisDil" class="button-group round even-5">
-							  <li><a href="#" id="one" class="small alert button">1</a></li>
-							  <li><a href="#" id="two" class="small orange button">2</a></li>
-							  <li><a href="#" id="three" class="small yellow button">3</a></li>
-							  <li><a href="#" id="four" class="small lime button">4</a></li>
-							  <li><a href="#" id="five" class="small success button">5</a></li>
-							</ul>
+<!-- here is an example layout -->
+<!--
+<h4>Prisoner's Dilemma</h4>	
+<ul id="PrisDil" class="button-group round even-5">
+ <li><a href="#" id="one" class="small alert button">1</a></li>
+ <li><a href="#" id="two" class="small orange button">2</a></li>
+ <li><a href="#" id="three" class="small yellow button">3</a></li>
+ <li><a href="#" id="four" class="small lime button">4</a></li>
+ <li><a href="#" id="five" class="small success button">5</a></li>
+</ul>
+-->
 				</div>
-			</div>
-
+</div>
 	<hr />
 	<!--Bottom Bar of information-->
 	<div class="row">
@@ -104,351 +83,12 @@
 
   <script>
   document.write('<script src=' +
-  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
   '.js><\/script>')
   </script>
-
-  <script>
-  	$(document).ready(function(){
-  		$("#Scarcity #one").click(function(){
-  			$("#Scarcity .button").attr("disabled", false);
-        	$("#Scarcity #one").attr("disabled", true);
-  			var var_topic = "Scarcity"
-  			var var_data = 1;
-        });
-  		$("#Scarcity #two").click(function(){
-  			$("#Scarcity .button").attr("disabled", false);
-        	$("#Scarcity #two").attr("disabled", true);
-  			var var_topic = "Scarcity"
-  			var var_data = 2;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#Scarcity #three").click(function(){
-			$("#Scarcity .button").attr("disabled", false);
-        	$("#Scarcity #three").attr("disabled", true);
-  			var var_topic = "Scarcity"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#Scarcity #four").click(function(){
-			$("#Scarcity .button").attr("disabled", false);
-        	$("#Scarcity #four").attr("disabled", true);
-  			var var_topic = "Scarcity"
-  			var var_data = 4;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#Scarcity #five").click(function(){
-			$("#Scarcity .button").attr("disabled", false);
-        	$("#Scarcity #five").attr("disabled", true);
-  			var var_topic = "Scarcity"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-
-  		$("#OppCost #one").click(function(){
-  			$("#OppCost .button").attr("disabled", false);
-        	$("#OppCost #one").attr("disabled", true);
-  			var var_topic = "OppCost"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#OppCost #two").click(function(){
-  			$("#OppCost .button").attr("disabled", false);
-        	$("#OppCost #two").attr("disabled", true);
-  			var var_topic = "OppCost"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#OppCost #three").click(function(){
-  			$("#OppCost .button").attr("disabled", false);
-        	$("#OppCost #three").attr("disabled", true);
-  			var var_topic = "OppCost"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#OppCost #four").click(function(){
-  			$("#OppCost .button").attr("disabled", false);
-        	$("#OppCost #four").attr("disabled", true);
-  			var var_topic = "OppCost"
-  			var var_data = 4;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#OppCost #five").click(function(){
-  			$("#OppCost .button").attr("disabled", false);
-        	$("#OppCost #five").attr("disabled", true);
-  			var var_topic = "OppCost"
-  			var var_data = 5;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-
-  		$("#CompAdv #one").click(function(){
-  			$("#CompAdv .button").attr("disabled", false);
-        	$("#CompAdv #one").attr("disabled", true);
-  			var var_topic = "CompAdv"
-  			var var_data = 5;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#CompAdv #two").click(function(){
-  			$("#CompAdv .button").attr("disabled", false);
-        	$("#CompAdv #two").attr("disabled", true);
-  			var var_topic = "CompAdv"
-  			var var_data = 2;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#CompAdv #three").click(function(){
-  			$("#CompAdv .button").attr("disabled", false);
-        	$("#CompAdv #three").attr("disabled", true);
-  			var var_topic = "CompAdv"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#CompAdv #four").click(function(){
-  			$("#CompAdv .button").attr("disabled", false);
-        	$("#CompAdv #four").attr("disabled", true);
-  			var var_topic = "CompAdv"
-  			var var_data = 4;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#CompAdv #five").click(function(){
-  			$("#CompAdv .button").attr("disabled", false);
-        	$("#CompAdv #five").attr("disabled", true);
-  			var var_topic = "CompAdv"
-  			var var_data = 5;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-
-  		$("#PrisDil #one").click(function(){
-  			$("#PrisDil .button").attr("disabled", false);
-        	$("#PrisDil #one").attr("disabled", true);
-  			var var_topic = "PrisDil"
-  			var var_data = 1;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#PrisDil #two").click(function(){
-  			$("#PrisDil .button").attr("disabled", false);
-        	$("#PrisDil #two").attr("disabled", true);
-  			var var_topic = "PrisDil"
-  			var var_data = 2;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#PrisDil #three").click(function(){
-  			$("#PrisDil .button").attr("disabled", false);
-        	$("#PrisDil #three").attr("disabled", true);
-  			var var_topic = "PrisDil"
-  			var var_data = 3;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#PrisDil #four").click(function(){
-  			$("#PrisDil .button").attr("disabled", false);
-        	$("#PrisDil #four").attr("disabled", true);
-  			var var_topic = "PrisDil"
-  			var var_data = 4;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-  		$("#PrisDil #five").click(function(){
-  			$("#PrisDil .button").attr("disabled", false);
-        	$("#PrisDil #five").attr("disabled", true);
-  			var var_topic = "PrisDil"
-  			var var_data = 5;
-            $.ajax({
-                url: 'feedBack.php',
-                type: 'GET',
-                data: { var_PHP_topic: var_topic,
-                		var_PHP_data: var_data },
-                success: function(data) {
-                	$(".panel").attr("disabled", false);
-                    $("#Scarcity #two").attr("disabled", true);
-                    alert(data);
-                }
-            });
-  		});
-
-
-	});
-  </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- <script src="javascripts/student_topics.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+  <script src="javascripts/student_topics.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="javascripts/foundation.min.js"></script>
   <!--
   

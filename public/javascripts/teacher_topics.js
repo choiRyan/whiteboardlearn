@@ -18,7 +18,7 @@ window.onload = function() {
     submitButton.onclick = function(){
 	if(field.value != "" && field.value){ // should fill out field first..
 	    socket.emit('newFeedbackTopic', {code:qcode.value, t:field.value});
-	    field.value = "submitted";
+	    field.value = "";
 	}
 	return false;
     };
@@ -44,7 +44,7 @@ window.onload = function() {
 		    if(isNaN(avg)){
 			html += '<h4><b>'+fb[i].t+'</b></h4><p>No response</p>';
 		    }else{
-			html += '<h4><b>'+fb[i].t+'</b>:</h4> <p>Average: ' + avg + ', 1: '+ratingLog[0] + ', 2: ' +ratingLog[1] + ', 3: '+ratingLog[2] + ', 4: ' + ratingLog[3] + ', 5: ' + ratingLog[4] + '</p>';
+			html += '<h4><b>'+fb[i].t+'</b>:</h4> <p>Average: ' + avg.toFixed(2) + ', 1: '+ratingLog[0] + ', 2: ' +ratingLog[1] + ', 3: '+ratingLog[2] + ', 4: ' + ratingLog[3] + ', 5: ' + ratingLog[4] + '</p>';
 		    }
 		    content.innerHTML = html;
 		}//end for(all tq)

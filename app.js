@@ -22,6 +22,26 @@ io.sockets.on('connection',function(socket){
 		socket.destroy();
 	    });
 
+	//listens for feedback submissions from students, add feedback, update.
+	//{code:String,tIndex:String,d:Number}
+	socket.on('submitFeedback',function(data){
+		Whiteboard.findOne({code:data.code}).exec(function(err,out){
+			if(err){
+			    console.log("ERROR: " +err);
+			}else if(out != null){
+			    out.tq[data.tIndex].dist.push(data.d);
+			    out.save(function(err){
+				    if(err){console.log("error while adding feedback response to list of ratings: "+err);}else{
+					//all OK; emit "out" we just saved
+					io.sockets.emit('updateTopics',out.tq);
+				    }
+				});
+			}else{
+			    console.log("Received null");
+			}
+		    });
+	    });
+
 	//listens for requests for teacher's topics (for feedback)
 	socket.on('getFeedbackTopics',function(data){
 		Whiteboard.findOne({code:data.code}).exec(function(err,out){
@@ -37,9 +57,9 @@ io.sockets.on('connection',function(socket){
 
 	//listens for newly submitted teacher's topics (for feedback)
 	socket.on('newFeedbackTopic', function(data){ //{code:str,t:str,dist:[]}
-		console.log("data is " + data.code);
 		Whiteboard.findOneAndUpdate({code:data.code},{$push:{tq:{t:data.t,dist:[]}}},{upsert:false},function(er,out){if(er){console.log('ERROR: '+er);}
 			else if(out != null){
+			    console.log(out);
 			    io.sockets.emit('updateTopics', out.tq);
 			}else{console.log("OUT = NULL?");}
 		    });
@@ -62,7 +82,6 @@ io.sockets.on('connection',function(socket){
 	socket.on('studentQasked',function(data){
 		//add this new question into our database~
 	    if(data.q){
-		console.log('heres the new question' + data.q);
 		Whiteboard.findOneAndUpdate(
 		    {code:data.code},
 	            {$push: {sq:{q:data.q,ups:0}}},
@@ -198,7 +217,6 @@ app.get('/student_clicker_answeredA',function(req,res){
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
-		    console.log(out.cq[req.session.currentQ].r1);
 		    out.cq[req.session.currentQ].r1 = out.cq[req.session.currentQ].r1+1; // increment vote count by 1
 		    out.save(function(err){
 			    if(err){
@@ -221,7 +239,6 @@ app.get('/student_clicker_answeredB',function(req,res){
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
-		    console.log(out.cq[req.session.currentQ].r2);
 		    out.cq[req.session.currentQ].r2 = out.cq[req.session.currentQ].r2+1; // increment vote count by 1
 		    out.save(function(err){
 			    if(err){
@@ -244,7 +261,6 @@ app.get('/student_clicker_answeredC',function(req,res){
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
-		    console.log(out.cq[req.session.currentQ].r3);
 		    out.cq[req.session.currentQ].r3 = out.cq[req.session.currentQ].r3+1; // increment vote count by 1
 		    out.save(function(err){
 			    if(err){
@@ -267,7 +283,6 @@ app.get('/student_clicker_answeredD',function(req,res){
 		if(err){ res.redirect('/studentsession');
 		    console.log('ERROR ' + err);
 		}else if(out != null){
-		    console.log(out.cq[req.session.currentQ].r4);
 		    out.cq[req.session.currentQ].r4 = out.cq[req.session.currentQ].r4+1; // increment vote count by 1
 		    out.save(function(err){
 			    if(err){
