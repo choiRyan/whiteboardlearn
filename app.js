@@ -22,6 +22,34 @@ io.sockets.on('connection',function(socket){
 		socket.destroy();
 	    });
 
+	//listens for new clicker questions sent from prof
+	socket.on('sendClickerQ',function(data){
+		Whiteboard.findOne({code:data.code},function(err,out){
+			if(err)console.log("ERROR: "+err);
+			else if(out != null){ 
+			    Whiteboard.findOneAndUpdate({code:data.code},{$push: {cq:{q:data.q, id: out.ccq, o1:data.o1, o2:data.o2, o3:data.o3, o4:data.o4,r1:0, r2:0, r3:0, r4:0}}},{upsert:false},function(er){
+				    if(er){
+					console.log("ERROR" + er);
+				    }else{
+					var temp = out.ccq;
+					Whiteboard.update({code:data.code},{$inc:{'ccq':1}}).exec(function(e){
+						if(e){console.log("error: "+e);}else{
+						    Whiteboard.findOne({code:data.code},function(errf,out1){
+							    if(errf)console.log("error: " + errf);
+							    else{
+								console.log("ccq:"+ out1.ccq);
+								console.log(out1.cq[out1.ccq-1]);
+								io.sockets.emit("updateClickerQ",{cq:out1.cq[out1.ccq-1]});
+							    }
+							});
+						}
+					    });
+				    }
+				});
+			}
+		    });	
+	    });
+	
 	//listens for feedback submissions from students, add feedback, update.
 	//{code:String,tIndex:String,d:Number}
 	socket.on('submitFeedback',function(data){

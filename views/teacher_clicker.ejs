@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Whiteboard: Student-Clicker</title>
+  <title>Whiteboard: Professor-Clicker</title>
 
   
     <link rel="stylesheet" href="stylesheets/foundation.css">
@@ -15,6 +15,7 @@
 
 </head>
 <body>
+    <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
 
 	<nav class="top-bar">
 	  <ul class="title-area">
@@ -60,41 +61,42 @@
 				<div class="large-12 columns  rightrow">
 					<div class="panel">		
 						<h4>View class answers</h4>
-						<p>Display student answers</p>		
+<!-- Show last submitted question and submitted answers-->
+<div id="content"></div>
 						<hr />
 						<h4>Ask your class a question</h4>		
 						<div class="row">
 					      <div class="large-12 columns">
 					        <label>Question</label>
-					        <input name="q" type="text" placeholder="Type your question here">
+					        <input id="qf" name="q" type="text" placeholder="Type your question here">
 					      </div>
 					    </div>
 					    
 					     <div class="row">
 					      <div class="large-6 columns">
 					        <label>Answer Choice A</label>
-					        <input name="op1" type="text" placeholder="">
+					        <input id="o1f" name="op1" type="text" placeholder="">
 					      </div>
 					      <div class="large-6 columns">
 					        <label>Answer Choice B</label>
-					        <input name="op2" type="text" placeholder="">
+					        <input id="o2f" name="op2" type="text" placeholder="">
 					      </div>
 					  	 </div>
 
 					  	 <div class="row">
 					      <div class="large-6 columns">
 					        <label>Answer Choice C</label>
-					        <input name="op3" type="text" placeholder="">
+					        <input id="o3f" name="op3" type="text" placeholder="">
 					      </div>
 					      <div class="large-6 columns">
 					        <label>Answer Choice D</label>
-					        <input name="op4" type="text" placeholder="">
+					        <input id="o4f" name="op4" type="text" placeholder="">
 					      </div>
 					  	 </div>
 
 						<div class="row">
 					  	 <div class="small-2 columns">
-							<input type="submit" style="text-align:center" class="button prefix"></input>
+						   <input type="button" style="text-align:center" onclick="return false;" class="button prefix" id="submit" value="Submit"></input>
 						 </div>
 						</div>
 					</div>
@@ -116,7 +118,8 @@
   ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
   '.js><\/script>')
   </script>
-  
+  <script src="javascripts/teacher_clicker.js"></script>
+  <script src="/socket.io/socket.io.js"></script>  
   <script src="javascripts/foundation.min.js"></script>
   <!--
   
