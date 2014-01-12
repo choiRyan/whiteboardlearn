@@ -6,7 +6,6 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Whiteboard: Student-Clicker</title>
-
   
     <link rel="stylesheet" href="stylesheets/foundation.css">
     <link rel="stylesheet" href="stylesheets/page_styles.css">
@@ -16,20 +15,21 @@
 
 </head>
 <body>
+<!-- hidden text areas used for storing data... lol how do i middlewarez?? -->
   <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
 	<nav class="top-bar">
 	  <ul class="title-area">
 	    <li class="name">
 	    	<ul><a href="#"><img src="images/header.png" id="header"></a></div></ul>
 	    </li>
-        <li class="toggle-topbar menu-icon"><a href="logout.html"><span>Menu</span></a></li>
+        <li class="toggle-topbar menu-icon"><a href="/logout"><span>Menu</span></a></li>
 	  </ul>
 
 	    <section class="top-bar-section">
 		    <!-- Left Nav Section -->
 		    <ul class="right">
 		    	<li class="divider"></li>
-			    <li style="text-align:center"><a href="logout.html" id ="exit">Exit Session</a></li>	
+			    <li style="text-align:center"><a href="/logout" id ="exit">Exit Session</a></li>	
 				<li class="divider"></li>  
 		 	</ul>
 	 	</section>
@@ -71,17 +71,15 @@
 <!-- end submit a question-->
 							</form><hr />
 						<h4>Vote on questions.</h4>	<br />	
-<!-- socket/angular list and upvote questions begin here -->
-
-<!--<div ng-controller="wbCtrl">
+<!-- realtime: list and upvote questions begin here -->
+<!--<div ng-controller="wbCtrl"> *angular2hard, don't need it anyways.. for now
 <input type="text" name=<%= session.code %> ng-model="code" style="display:none;"/>
 <p ng-repeat="submission in submissions">
 <a href="#" class="small success button choice">Upvote | {{submission.ups}}</a>{{submission.q}}
-</p>-->
-<div id="content"></div>
-<!--		    <p><a href="#" class="small success button choice">Upvote</a> Is opportunity cost only measured in money?</p>
-		    <p><a href="#" class="small success button choice">Upvote</a> Can you give more examples of prisoner's dilemma?</p>-->
 </div>
+</p>-->
+
+<div id="content"></div> <!-- this is updated via socket.io & studentQ.js-->
 <!-- end list and upvotes -->
 				</div>
 			</div>

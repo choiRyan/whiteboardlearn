@@ -37,8 +37,6 @@ io.sockets.on('connection',function(socket){
 	    });
 	//listens for new student Qs
 	socket.on('studentQasked',function(data){
-		console.log('received studentQasked:');
-		console.log(data);
 		//add this new question into our database~
 		Whiteboard.findOneAndUpdate(
 		    {code:data.code},
@@ -47,19 +45,36 @@ io.sockets.on('connection',function(socket){
 		    function(err,out){if(err){console.log('ERROR '+err);}else{
 			    var sqs = out.sq;
 			    var temp = {q:data.q,ups:0};
-			    sqs.concat(temp);
 			    //send the new Q AND prev Qs to everyone else also!
 			    io.sockets.emit('newStudentQ',sqs);
 			}
 	        });
 	    
-	});
-	socket.on('studentQupvoted',function(data){ // listens for s_Q upvotes
-      
-	});
-
-});
-
+	    });
+	socket.on('upvoted',function(data){ // listens for s_Q upvotes
+		Whiteboard.findOne({code:data.code}).exec(function(err,out){
+			if(err){console.log('ERROR ' + err);}
+			else if(out != null){ // standard...
+			    var sq = out.sq;
+			    console.log(sq);
+			    console.log("SQ IS: " + sq +" END");
+			    console.log("SQ OF SQINDEX IS" + sq[data.sqindex]);
+			   out.sq[data.sqindex].ups=out.sq[data.sqindex].ups+1;
+			    out.save(function(er){
+				    if(er){
+					console.log('ERROR ' + er);
+				    }else{ // if everything went find
+					//send a signal to all sockets (+1 up)
+			       io.sockets.emit('studentQuestionReload',out.sq);
+				    }
+				});
+			}
+			else{ //if out is somehow null
+			    console.log('ERROR out is null, line 60, app.js');
+			}
+		    });	
+	    });
+    });
 
 app.engine('ejs',engine);
 app.set('views', path.join(__dirname, 'views'));
@@ -134,7 +149,6 @@ app.get('/student_clicker', function(req,res){
 		}
 		else if (out != null){
 		    if(out.ccq != 0){
-			//			console.log(out);
 		    req.session.currentQindex=out.ccq-1;
 		    req.session.currentQ=out.ccq-1;
 		    req.session.q = out.cq[out.ccq-1].q;
