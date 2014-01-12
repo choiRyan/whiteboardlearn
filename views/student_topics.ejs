@@ -5,10 +5,9 @@
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Whiteboard: Student-Clicker</title>
+  <title>Whiteboard: Student-Topics</title>
 
-  
-    <link rel="stylesheet" href="stylesheets/foundation.css">
+     <link rel="stylesheet" href="stylesheets/foundation.css">
     <link rel="stylesheet" href="stylesheets/page_styles.css">
 
   <script src="javascripts/vendor/custom.modernizr.js"></script>
@@ -21,14 +20,14 @@
 	    <li class="name">
 	    	<ul><a href="#"><img src="images/header.png" id="header"></a></div></ul>
 	    </li>
-        <li class="toggle-topbar menu-icon"><a href="logout.html"><span>Menu</span></a></li>
+        <li class="toggle-topbar menu-icon"><a href="/logout"><span>Menu</span></a></li>
 	  </ul>
 
 	    <section class="top-bar-section">
 		    <!-- Left Nav Section -->
 		    <ul class="right">
 		    	<li class="divider"></li>
-			    <li style="text-align:center"><a href="logout.html" id ="exit">Exit Session</a></li>	
+			    <li style="text-align:center"><a href="/logout" id ="exit">Exit Session</a></li>	
 				<li class="divider"></li>  
 		 	</ul>
 	 	</section>
@@ -58,7 +57,8 @@
 						<hr />	
                             <h1>Topics</h1>
 						<hr />
-
+<!-- real-time updates of   -->
+<div id="content"></div>
 						<h4>Scarcity</h4>		
 							<ul id="Scarcity" class="button-group round even-5">
 							  <li><a href="#" id="one" class="small alert button">1</a></li>
@@ -447,6 +447,8 @@
 	});
   </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script src="javascripts/teacher_topics.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
   <script src="javascripts/foundation.min.js"></script>
   <!--
   
