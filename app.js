@@ -21,7 +21,47 @@ io.sockets.on('connection',function(socket){
 		console.log('socket error ' + err);
 		socket.destroy();
 	    });
-
+	
+	//listens for requests for the latest clicker question
+	socket.on('getLatestClickerQ', function(data){
+		Whiteboard.findOne({code:data.code},function(err,out){
+			if(err)console.log("ERROR: " +err);
+			else if(out != null){
+			    io.sockets.emit("updateClickerQ",{cq:out.cq[out.ccq-1]});
+			}else{console.log("Out is null?");}
+		    });
+	    });
+	
+	//listens for new responses to latest question from students
+	socket.on('answerClickerQ',function(data){ // contains code, cqIndex(the index), and choice (1~4)
+	        Whiteboard.findOne({code:data.code},function(err,out){
+			if(err)console.log("error: " + err);
+			else if(out != null){
+			    if(data.choice == 1){
+				out.cq[data.cqIndex].r1 = out.cq[data.cqIndex].r1+1; // increment vote count by 1
+			    }if(data.choice == 2){
+				out.cq[data.cqIndex].r2 = out.cq[data.cqIndex].r2+1;
+			    }if(data.choice == 3){
+				out.cq[data.cqIndex].r3 = out.cq[data.cqIndex].r3+1;
+			    }if(data.choice == 4){
+				out.cq[data.cqIndex].r4 = out.cq[data.cqIndex].r4+1;
+			    }
+				out.save(function(errr){ // commit the incremental change
+					if(errr)console.log("ERROR: " + errr);
+					else{
+					    Whiteboard.findOne({code:data.code},function(errf,out1){
+						    if(errf)console.log("error: " + errf);
+						    else{ //respond with the latest question
+							io.sockets.emit("updateClickerQ",{cq:out1.cq[out1.ccq-1]});
+						    }
+						});
+					}
+				    });
+			    
+			}else{console.log("Out is null?");}
+		    });
+	    });
+	
 	//listens for new clicker questions sent from prof
 	socket.on('sendClickerQ',function(data){
 		Whiteboard.findOne({code:data.code},function(err,out){
@@ -37,7 +77,6 @@ io.sockets.on('connection',function(socket){
 						    Whiteboard.findOne({code:data.code},function(errf,out1){
 							    if(errf)console.log("error: " + errf);
 							    else{
-								console.log("ccq:"+ out1.ccq);
 								console.log(out1.cq[out1.ccq-1]);
 								io.sockets.emit("updateClickerQ",{cq:out1.cq[out1.ccq-1]});
 							    }

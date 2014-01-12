@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="clickerApp"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Whiteboard: Student-Clicker</title>
-
+  
+  <!-- hidden text areas used for storing data... lol how do i middlewarez?? -->
+  <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
   
     <link rel="stylesheet" href="stylesheets/foundation.css">
     <link rel="stylesheet" href="stylesheets/page_styles.css">
 
   <script src="javascripts/vendor/custom.modernizr.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js">
-</script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8
-/angular-resource.min.js"></script>
-<script src="javascripts/core.js"></script>
 
 </head>
-<body ng-controller="mainController">
+<body>
 
 	<nav class="top-bar">
 	  <ul class="title-area">
@@ -64,16 +61,17 @@
 						<h1>Clicker</h1>
 						<hr />
 						<!-- Grid Example -->
-<% if(!session.q){ %>
+<!--real-time latest question display -->
+<div id="content"></div>
+<!--<% if(!session.q){ %>
 						<h4>No current questions.</h4><br/> <% }if(session.q){ %>
 						<h4><%= session.q %></h4><br/>
-<!--voted. show results -->
 <% if(session.pickedA == 1){ %><p>You chose option A: <%= session.o1 %></p> <% } %>
 <% if(session.pickedB == 1){ %><p>You chose option B: <%= session.o2 %></p> <% } %>
 <% if(session.pickedC == 1){ %><p>You chose option C: <%= session.o3 %></p> <% } %>
 <% if(session.pickedD == 1){ %><p>You chose option D: <%= session.o4 %></p> <% } %>
 
-<% if(session.pickedA != 1 && session.pickedB != 1 && session.pickedC != 1 & session.pickedD != 1){ %> <!-- otherwise, show options-->
+<% if(session.pickedA != 1 && session.pickedB != 1 && session.pickedC != 1 & session.pickedD != 1){ %>
 						<% if(session.o1) { %><p><a href="student_clicker_answeredA" class="small success button choice">A</a><%= session.o1 %></p><% } %>
 
 						<% if(session.o2) { %><p><a href="student_clicker_answeredB" class="small success button choice">B</a><%= session.o2 %></p><% } %>
@@ -81,7 +79,7 @@
 						<% if(session.o3) { %><p><a href="student_clicker_answeredC" class="small success button choice">C</a><%= session.o3 %></p><% } %>
 
 						<% if(session.o4) { %><p><a href="student_clicker_answeredD" class="small success button choice">D</a><%= session.o4 %></p><% } %>
-<%  } } %>
+<%  } } %>-->
 				</div>
 			</div>
 	<hr />
@@ -99,7 +97,10 @@
   ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
   '.js><\/script>')
   </script>
+
   
+  <script src="javascripts/student_clicker.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="javascripts/foundation.min.js"></script>
  
  <!--
