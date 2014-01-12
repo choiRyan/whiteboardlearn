@@ -12,27 +12,8 @@ window.onload = function() {
     var qindex = -1;
     pastUpvotes = [];
     socket.on('connect',function(data){
-
 	    //ask for all the questions when page loads
 	    socket.emit('getStudentQuestions', {code:qcode.value}); 
-	});
-
-    //asking a new question, sending to server
-    socket.on('newStudentQ', function (sq) {
-	    if(sq) {
-		var html = '';
-		for(var i=0; i<sq.length; i++) {
-		    if(isIn(pastUpvotes, i)){ // if already upvoted; disable
-html += '<p><button class="small success button choice" disabled onclick="upvotebuttonpressed(this);" name='+i+'>Upvote (' + sq[i].ups + ')</button>' + sq[i].q + '</p>';
-		    }else{ 
-html += '<p><button class="small success button choice" onclick="upvotebuttonpressed(this);" name='+i+'>Upvote (' + sq[i].ups + ')</button>' + sq[i].q + '</p>';
-		    }
-		}
-		content.innerHTML = html;
-		return false;
-	    } else {
-		console.log("There is a problem:", data);
-	    }
 	});
 
     //received response from server with all the questions from the class
@@ -40,13 +21,16 @@ html += '<p><button class="small success button choice" onclick="upvotebuttonpre
 	    if(sq){ // if we got a response
 		var html = ''; //put the questions in the html
 		for(var i=0; i<sq.length; i++){ //sq: [{q:String,ups:Number}]
-		    if(isIn(pastUpvotes, i)){ // if already upvoted; disable
+		    if(sq[i].q){
+			console.log("sq.q is " + sq.q);
+			if(isIn(pastUpvotes, i)){ // if already upvoted; disable
 html += '<p><button class="small success button choice" disabled name='+i+'>Upvote (' + sq[i].ups + ')</button>' + sq[i].q + '</p>';
-                    }else{
-			var string = "onclick:sqindex.value= ";
-			string.concat(i.toString());
-			html += '<p><button class="small success button choice" onclick="upvotebuttonpressed(this);" name='+i+'>Upvote (' + sq[i].ups + ')</button>' + sq[i].q + '</p>';
-                    }
+			}else{
+			    var string = "onclick:sqindex.value= ";
+			    string.concat(i.toString());
+			    html += '<p><button class="small success button choice" onclick="upvotebuttonpressed(this);" name='+i+'>Upvote (' + sq[i].ups + ')</button>' + sq[i].q + '</p>';
+			}
+		    }
 		}
 		content.innerHTML = html;
 		return false;
@@ -64,10 +48,6 @@ html += '<p><button class="small success button choice" disabled name='+i+'>Upvo
 	    field.value = "";
 	}
 	return false;
-    };
-    function upvotebuttonpressed(input){
-	alert(input.name);
-	console.log("weffwlkjfewjlkfweljkefwjkl0");
     };
 };
 

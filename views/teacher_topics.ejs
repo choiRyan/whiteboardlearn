@@ -5,16 +5,21 @@
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Whiteboard: Student-Clicker</title>
+  <title>Whiteboard: Professor-Topics</title>
 
   
     <link rel="stylesheet" href="stylesheets/foundation.css">
     <link rel="stylesheet" href="stylesheets/page_styles.css">
 
-  <script src="javascripts/vendor/custom.modernizr.js"></script>
+    <script src="javascripts/teacher_topics.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/vendor/custom.modernizr.js"></script>
 
 </head>
 <body>
+
+  <!-- hidden text areas used for storing data... lol how do i middlewarez?? -->
+  <input type="textarea" style="display:none;" id="classCode" value=<%= session.code %>>
 
 	<nav class="top-bar">
 	  <ul class="title-area">
@@ -57,13 +62,10 @@
 			<h1>Topics</h1>
 			<hr />
 			<!-- Grid Example -->
-			<div ng-controller="appController">
 			  <div class="row">
 			    <div class="large-12 columns rightrow">
 			      <!-- display questions and ratings here-->
-			      <div ng-view>
-			      </div>
-
+<div id="content"></div>
 			      <!--
 			      <h4>Opportunity Cost</h4>	
 			      <p>Display realtime ratings here</p>
@@ -75,20 +77,19 @@
 			      <h4>Add another topic.</h4>	<br />-->
 			      <form>	
 				<div class="small-10 columns">
-				  <input type="text" placeholder="Enter topic">
+				  <input type="text" id="topicField"  placeholder="Enter topic">
 				</div>
 				<div class="small-2 columns">
-				  <a href="#" class="button prefix">Submit</a>
+				  <a href="#" class="button prefix" onclick="return false;" id="submit">Submit</a>
 				</div>
 			      </form>
 			    </div> <!-- large-12 columns -->
 			  </div> <!-- row -->
-			</div><!-- ng-controller -->
 	<hr />
 	<!--Bottom Bar of information-->
 	<div class="row">
 		<div class="large-12 columns">
-			<p style="text-align:center">2013 Whiteboard Learning &#153; &sdot; <a href="contact_us.html">Contact Us</a></p>
+			<p style="text-align:center">2013 Whiteboard Learning &#153; &sdot; <a href="/contact_us">Contact Us</a></p>
 		</div>
 	</div>
 	</div>
@@ -101,9 +102,7 @@
   </script>
   
   <script src="javascripts/foundation.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8
-/angular-resource.min.js"></script>
+
   <!--
   
   <script src="js/foundation/foundation.js"></script>
