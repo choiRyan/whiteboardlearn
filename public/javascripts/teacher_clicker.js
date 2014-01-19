@@ -22,7 +22,7 @@ window.onload = function() {
     //listen for new responses or questions~
     socket.on('updateClickerQ', function(data){
 	    if(data.cq){
-		var html = '';
+		/*		var html = '';
 		html+='<h5><b>' + data.cq.q  + '</b></h5>';
 		if(data.cq.o1 != "")
 		html+='<p>' + data.cq.r1 + ' : '  + data.cq.o1 + '</p>';
@@ -32,7 +32,34 @@ window.onload = function() {
 		html+='<p>' + data.cq.r3 + ' : '  + data.cq.o3 + '</p>';
 		if(data.cq.o4 != "")
 		html+='<p>' + data.cq.r4 + ' : '  + data.cq.o4 + '</p>';
-		content.innerHTML = html;
+		content.innerHTML = html;*/
+
+		//find highest data point
+	        var highest = 0;
+		if(data.cq.r1){
+		    if(data.cq.r1 > highest) highest = data.cq.r1;
+		}
+		if(data.cq.r2){
+		    if(data.cq.r2 > highest) highest = data.cq.r2;
+		}
+		if(data.cq.r3){
+		    if(data.cq.r3 > highest) highest = data.cq.r3;
+		}
+		if(data.cq.r4){
+		    if(data.cq.r4 > highest) highest = data.cq.r4;
+		}
+		//graph data
+		var barChartData = {
+		    labels : [data.cq.o1, data.cq.o2, data.cq.o3, data.cq.o4],
+		    datasets : [
+		{
+		    fillColor : "rgba(151,187,205,0.5)",
+		    stokeColor : "rgba(151,187,205,1)",
+		    data : [data.cq.r1, data.cq.r2, data.cq.r3, data.cq.r4]
+		}
+				]
+		}
+		var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Bar(barChartData,{scaleSteps:highest,scaleStepWidth:1});
 		return false;
 	    }
 	});

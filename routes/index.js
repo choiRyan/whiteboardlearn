@@ -18,7 +18,7 @@ exports.index = function ( req, res, next ){
 
 exports.create = function ( req, res, next ){
     Whiteboard.findOne(({code:req.body.code}),function(err,out){
-	    if(err){res.redirect('/professor#CodeTaken');}
+	    if(err){res.redirect('/professor#error');}
 	    if(out == null){
 		new Whiteboard({
 			code : req.body.code,
@@ -38,7 +38,23 @@ exports.create = function ( req, res, next ){
 				res.redirect( '/professorsession' );
 			    }
 			});
-	    }else{res.redirect('/professor');} // code already in use
+	    }else{ // of the session is taken but the name matches, send next.
+		if(req.body.name == out.name){
+		    req.session.code = req.body.code;
+		    req.session.name = req.body.name;
+		    //save cookie data for prof; prof can't also be a student
+		    res.cookie('code', req.body.code, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		    res.cookie('name', req.body.name, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		    res.cookie('loggedin', 1, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		    res.cookie('professor', 1, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		    res.cookie('student', 0, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		    req.session.msg = "";
+		    res.redirect('/professorsession');
+		}else{
+		    req.session.msg = "Code is in use; course name does not match current session name";
+		    res.redirect('/professor');
+		}
+	    }
 	});
 };
 
@@ -51,35 +67,17 @@ exports.join = function(req,res,next){
 		Whiteboard.update({code:req.body.code}, {$inc:{'students':1}}).exec();
 		req.session.code = req.body.code;
 		req.session.name = out.name;
-		req.session.professor = false;
-		req.session.student = true;
-		req.session.loggedin = true;
+		res.cookie('code', req.body.code, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		res.cookie('name', req.body.name, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		res.cookie('loggedin', 1, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		res.cookie('professor', 0, { expires: new Date(Date.now() +24*60*60*1000), path: '/' });
+		res.cookie('student', 1, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
+		req.session.msg = "";
 		res.redirect('/studentsession');
 	    }else{
-		console.log('Session not found. Check code');
+		req.session.msg = "Session not found. Your code could be wrong, or the class session has expired.";
 		res.redirect('/student');
 	    }
-	}
-    });
-}
-
-exports.clicker_make = function(req,res,next){
-    Whiteboard.findOne({code:req.session.code},function(err,out){
-        var workingWith = out;
-        if(err)console.log(err);
-        else if(out != null){ 
-	    Whiteboard.findOneAndUpdate({code:req.session.code},{$push: {cq:{q:req.body.q, id: out.ccq,	o1:req.body.op1, o2:req.body.op2, o3:req.body.op3, o4:req.body.op4,r1:0, r2:0, r3:0, r4:0}
-		    }
-		},
-		{upsert:false},
-		function(err){
-		    if(err){
-			console.log("ERROR" + err);
-		    }else{
-			Whiteboard.update({code:req.session.code},{$inc:{'ccq':1}}).exec();
-			res.redirect('/professorsession');
-		    }
-		});
 	}
     });
 };

@@ -8,6 +8,8 @@ var app = express();
 var engine = require('ejs-locals');
 var mongoose = require( 'mongoose' );
 var Whiteboard = mongoose.model( 'Whiteboard' ); 
+var cookiesessions = require('cookie-sessions');
+
 // all environments
 app.set('port', process.env.PORT || 8080);
 var server = http.createServer(app);
@@ -192,8 +194,15 @@ app.engine('ejs',engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.logger('dev'));
-app.use(express.cookieParser());
-app.use(express.session({secret: 'thisisinfactathing'}));
+app.use(express.cookieParser('this is in fact a string thing that prevents manip.'));
+app.use(express.cookieSession({
+	    cookie:{
+		secret:'this is in fact a string thing thats prevents manip.',
+		    path:'/', 
+		    maxAge: 86400000 // expires after 24 hrs (24*60*60*1000)
+		    
+	    }
+	}));
 app.use(express.bodyParser());
 app.use(express.json());
 app.use(express.urlencoded());
@@ -208,12 +217,9 @@ if ('development' == app.get('env')) {
 
 //Routes
 app.get('/', routes.index);
-//app.get('/partials/:name', routes.partials); // ANGULAR
 app.post( '/create', routes.create); // from prof, makes session
 app.post( '/join', routes.join); // from student, joins session
-app.post( '/clicker_create', routes.clicker_make); // from prof, makes Q
 
-//Routes that give Angular data
 //Gives all student-submitted questions 
 app.get('/getStudentQuestions', function(req,res){
 	var code = req.code;
@@ -230,32 +236,97 @@ app.get('/whatis', function(req,res){
 	res.render('whatis');
     });
 app.get('/professor', function(req,res){
-	res.render('professor');
+	if(req.session){
+	    if(!req.session.msg) req.session.msg = "";
+	    res.render('professor', {session:req.session});
+	}else{ // session doesn't exist...
+	    req.session.msg = ""; // so make a blank msg so no crash
+	    req.session.loggedin = 0;
+	    req.session.student = 0;
+	    req.session.professor = 0;
+	    res.render('professor', {session:req.session});
+	}
     });
 app.get('/student', function(req,res){
-        res.render('student');
+	if(req.session){
+	    if(!req.session.msg) req.session.msg = "";
+	    res.render('student', {session:req.session});
+	}else{ // session doesn't exist...
+	    req.session.msg = "";
+	    req.session.loggedin = false;
+	    req.session.student = 0;
+	    req.session.professor = 0;
+	    res.render('student', {session:req.session});
+	}
     });
 app.get('/professorsession', function(req,res){
-	res.render('professorsession', {session:req.session});
+	if(req.cookies.professor == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+	    res.render('professorsession', {session:req.session});
+	}else{
+	    req.session.msg = 'Please create or enter existing session info.';
+	    res.render('professor', {session:req.session});
+	}
     });
 app.get('/studentsession', function(req,res){
-	res.render('studentsession', {session:req.session});
+	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+	    res.render('studentsession', {session:req.session});
+	}else{
+	    req.session.msg = 'Please join a session';
+	    res.render('student', {session:req.session});
+	}
     });
 app.get('/student_questions',function(req,res){
+	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){
 	res.render('student_questions', {session:req.session});
+	}else{
+	    req.session.msg = 'Please join a session';
+	    res.sender('student', {session:req.session});
+	}
     });
 app.get('/teacher_questions',function(req,res){
-	res.render('teacher_questions', {session:req.session});
+	if(req.cookies.professor == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+            res.render('teacher_questions', {session:req.session});
+        }else{
+	    req.session.msg = 'Please create or enter existing session info.';
+            res.render('professor', {session:req.session});
+        }
     });
 app.get('/teacher_clicker', function(req,res){
-	res.render('teacher_clicker', {session:req.session});
+	if(req.cookies.professor == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+	    res.render('teacher_clicker', {session:req.session});
+	}else{
+	    req.session.msg = 'Please create or enter existing session info.';
+	    res.render('professor', {session:req.session});
+	}
     });
 app.get('/teacher_topics', function(req,res){
-	res.render('teacher_topics', {session:req.session});
+	if(req.cookies.professor == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+            res.render('teacher_topics', {session:req.session});
+        }else{
+	    req.session.msg = 'Please create or enter existing session info.';
+            res.render('professor', {session:req.session});
+        }
     });
 app.get('/student_topics', function(req,res){
-	res.render('student_topics', {session:req.session});
+	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+	    res.render('student_topics', {session:req.session});
+	}else{
+	    req.session.msg = "Please join a session.";
+	    res.render('student', {session:req.session});
+	}
     });
 app.get('/student_clicker', function(req,res){	
-	res.render('student_clicker', {session:req.session});
+	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){
+	    req.session.msg = "";
+	    res.render('student_clicker', {session:req.session});
+	}else{
+	    req.session.msg = "Please join a session.";
+	    res.render('student', {session:req.session});
+	}
     });

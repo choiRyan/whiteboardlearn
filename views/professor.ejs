@@ -44,13 +44,15 @@
                         <input type="submit" class="button transition" name="Start my Session">                      
                     </div>
                 </form>
+<% if(session){ %>
+<p><font color="red"> <%= session.msg  %></font></p>
+<% } %>
             </content>
         </div>
     </body>
 
     <!-- jQuery -->
     <script src="javascripts/jquery-1.10.2.min.js"></script>
-
     <script type="text/javascript">
         $(document).ready(function() {
             $("body").css("display", "none");

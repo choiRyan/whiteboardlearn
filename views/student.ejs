@@ -34,17 +34,20 @@
 
     <body>
         <div id="floater"></div>
-        <div id="content">
+        <div id="vcontent">
            <content id="container">
                 <h1>I'm a Student.</h1>
                 <p>Enter a class code to join a session.</p>
-                <form action="/join" method="post">
+                <form id="studentform" action="/join" method="post">
                     <input name="code" type="text" placeholder="class code" required autofocus>
                     <div id="button-container">
                         <input type="submit" class="button transition" name="Join this Session">
-                    </div>   
-                </form>
-         </content>
+                    </div>                   
+		</form>
+<% if(session){ %>
+<p><font color="red"> <%= session.msg %></font></p>
+<% } %>
+           </content>
         </div>
     </body>
 
