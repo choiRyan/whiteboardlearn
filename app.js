@@ -219,6 +219,12 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.post( '/create', routes.create); // from prof, makes session
 app.post( '/join', routes.join); // from student, joins session
+app.get('/logout', function(req,res){
+	res.clearCookie();
+	req.session = null;
+	res.render('logout');
+    });
+app.get('/contact_us',function(req,res){res.redirect('contact_us.html')});
 
 //Gives all student-submitted questions 
 app.get('/getStudentQuestions', function(req,res){
@@ -263,10 +269,10 @@ app.get('/professorsession', function(req,res){
 	if(req.cookies.professor == '1' && req.cookies.loggedin == '1'){
 	    req.session.msg = "";
 	    res.render('professorsession', {session:req.session});
-	}else{
+	}/*else{
 	    req.session.msg = 'Please create or enter existing session info.';
 	    res.render('professor', {session:req.session});
-	}
+	    }*/
     });
 app.get('/studentsession', function(req,res){
 	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){

@@ -50,13 +50,32 @@ exports.create = function ( req, res, next ){
 		    res.cookie('student', 0, { expires: new Date(Date.now() + 24*60*60*1000), path: '/' });
 		    req.session.msg = "";
 		    res.redirect('/professorsession');
-		}else{
+		}else if(out.name != null){
 		    req.session.msg = "Code is in use; course name does not match current session name";
 		    res.redirect('/professor');
-		}
+		}else{
+		    new Whiteboard({
+			    code : req.body.code,
+			    name : req.body.name,
+			    students : 0,
+			    ccq : 0
+			}).save( function ( err, arr, count ){
+				if( err ){
+				    console.log("ERROR: " + err);
+				    return next( err );
+				}else{
+				    req.session.code = req.body.code;
+				    req.session.loggedin = true;
+				    req.session.professor = true;
+				    req.session.student = false;
+				    req.session.name = req.body.name;
+				    res.redirect( '/professorsession' );
+				}
+			    });
+		}    
 	    }
-	});
-};
+	    });
+	};
 
 //checks if code exists in database, and joins if so. else return '/'
 exports.join = function(req,res,next){

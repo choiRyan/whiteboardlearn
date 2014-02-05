@@ -54,7 +54,7 @@ window.onload = function() {
 		    datasets : [
 		{
 		    fillColor : "rgba(151,187,205,0.5)",
-		    stokeColor : "rgba(151,187,205,1)",
+		    strokeColor : "rgba(151,187,205,1)",
 		    data : [data.cq.r1, data.cq.r2, data.cq.r3, data.cq.r4]
 		}
 				]
