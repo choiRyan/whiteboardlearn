@@ -4,7 +4,7 @@ var content;
 var field;
 var submitButton;
 window.onload = function() {
-    socket = io.connect('http://ec2-54-201-215-248.us-west-2.compute.amazonaws.com');
+    socket = io.connect('localhost');
     content = document.getElementById("content");
     qcode = document.getElementById("classCode");
     field = document.getElementById("topicField");

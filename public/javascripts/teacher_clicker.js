@@ -4,7 +4,7 @@ var qfield;
 var f1, f2, f3, f4;
 var submitButton;
 window.onload = function() {
-    socket = io.connect('http://ec2-54-201-215-248.us-west-2.compute.amazonaws.com');
+    socket = io.connect('localhost');
     content = document.getElementById("content");
     qcode = document.getElementById("classCode");
     qfield = document.getElementById("qf");
@@ -13,7 +13,7 @@ window.onload = function() {
     f3 = document.getElementById("o3f");
     f4 = document.getElementById("o4f");
     submitButton = document.getElementById("submit");
-    
+
     //on loading the page, ask for latest question and results
     socket.on('connect', function(data){
 	    socket.emit('getLatestClickerQ',{code:qcode.value});
@@ -72,7 +72,7 @@ window.onload = function() {
 	    if(f2.value != "") oc+=1;
 	    if(f3.value != "") oc+=1;
 	    if(f4.value != "") oc+=1;
-	    if(oc>=2){ 
+	    if(oc>=2){
 		socket.emit('sendClickerQ',{code:qcode.value,q:qfield.value,o1:f1.value, o2:f2.value,o3:f3.value,o4:f4.value});
 		f1.value = "";
 		f2.value = "";

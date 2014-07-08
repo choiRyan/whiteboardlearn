@@ -2,7 +2,7 @@ var socket;
 var qcode;
 var content;
 window.onload = function() {
-    socket = io.connect('http://ec2-54-201-215-248.us-west-2.compute.amazonaws.com');
+    socket = io.connect('localhost');
     qcode = document.getElementById("classCode");
     content = document.getElementById("content");
     //on loading the page, get all the tq[i].t

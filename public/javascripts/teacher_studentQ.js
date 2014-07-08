@@ -1,7 +1,7 @@
 var socket;
 var qcode;
 window.onload = function(){
-    socket = io.connect('http://ec2-54-201-215-248.us-west-2.compute.amazonaws.com');
+    socket = io.connect('localhost');
     var content = document.getElementById("content");
     qcode = document.getElementById("classCode");
     socket.on('connect',function(data){
@@ -21,7 +21,7 @@ window.onload = function(){
 	    //TODO sort by upvotes
 
 	    var html = '';
-	    for(var i=0; i<sq.length; i++){		
+	    for(var i=0; i<sq.length; i++){
 		html += '<p><button class="small success button choice" disabled>Upvotes: ' + sq[i].ups + '</button>' + sq[i].q + '</p>';
 	    }
 	    content.innerHTML = html;
@@ -32,4 +32,3 @@ window.onload = function(){
     });
 
 };
-

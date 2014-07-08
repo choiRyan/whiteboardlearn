@@ -2,8 +2,8 @@ var socket;
 var qcode; // need for functions accessed outside of window.onload
 var pastUpvotes;
 window.onload = function() {
- 
-    socket = io.connect('http://ec2-54-201-215-248.us-west-2.compute.amazonaws.com');
+
+    socket = io.connect('localhost');
     var field = document.getElementById("questionField");
     var sqUpvote = document.getElementById("sqUpvote");
     var submitButton = document.getElementById("askQuestion");
@@ -13,7 +13,7 @@ window.onload = function() {
     pastUpvotes = [];
     socket.on('connect',function(data){
 	    //ask for all the questions when page loads
-	    socket.emit('getStudentQuestions', {code:qcode.value}); 
+	    socket.emit('getStudentQuestions', {code:qcode.value});
 	});
 
     //received response from server with all the questions from the class
