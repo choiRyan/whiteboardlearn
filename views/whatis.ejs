@@ -3,18 +3,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    
-    <title>Whiteboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="stylesheets/foundation.css">
-    <link rel="stylesheet" href="stylesheets/page_styles.css">
-    
-    <script src="javascripts/vendor/custom.modernizr.js"></script>
+  <title>Whiteboard</title>
 
-    <!-- Icons -->
-    <link rel="icon" type="image/ico" href="img/favicon.ico">
+  <link rel="stylesheet" href="stylesheets/base.css">
+
+  <script src="javascripts/vendor/custom.modernizr.js"></script>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/ico" href="img/favicon.ico">
 	<!-- for iPad with high-resolution Retina display running iOS ≥ 7: -->
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/apple-touch-icon-152x152-precomposed.png">
 	<!-- for iPad with high-resolution Retina display running iOS ≤ 6: -->
@@ -29,41 +28,20 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72x72-precomposed.png">
 	<!-- for non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
 	<link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
-    
+
 </head>
 
 <body>
-    <div id="floater"></div>
-    <div id="vcontent">
-        <content id="container">
-            <h1>A web platform for classroom communities.</h1>
-            <p>Whiteboard is an interactive learning platform that revolutionizes the way educators and students connect in a classroom setting. Educators can quickly and easily receive live feedback from students, or create dynamic quizzes and polls with Whiteboard's clicker functionality. Whiteboard's interface was designed with desktop and mobile users in mind, and can be used from any device with a web browser and internet connection. We also did away with login pages and accounts all-together; both educators and students can create and join sessions with just a few clicks of the mouse or a few taps on the screen.</p>
-            <div id="button-container">
-                <a class="button transition" href="/">Try it out</a>
-            </div>
-        </content>
+
+  <div id="floater"></div>
+  <content id="container">
+    <h1>A web platform for classroom communities.</h1>
+    <p>Whiteboard is an interactive learning platform that revolutionizes the way educators and students connect in a classroom setting. Educators can quickly and easily receive live feedback from students, or create dynamic quizzes and polls with Whiteboard's clicker functionality. Whiteboard's interface was designed with desktop and mobile users in mind, and can be used from any device with a web browser and internet connection. We also did away with login pages and accounts all-together; both educators and students can create and join sessions with just a few clicks of the mouse or a few taps on the screen.</p>
+    <div id="buttons">
+      <a class="button" href="/">Try it out</a>
     </div>
+  </content>
+
 </body>
-
-	<!-- jQuery -->
-	<script src="javascripts/jquery-1.10.2.min.js"></script>
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("body").css("display", "none");
-     
-        $("body").fadeIn(750);
-     
-        $("a.transition").click(function(event){
-            event.preventDefault();
-            linkLocation = this.href;
-            $("body").fadeOut(500, redirectPage);      
-        });
-             
-        function redirectPage() {
-            window.location = linkLocation;
-        }
-    });
-    </script>
 
 </html>

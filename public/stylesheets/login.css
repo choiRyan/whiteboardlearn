@@ -1,0 +1,105 @@
+/* Fonts */
+/* .................................... */
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato Light';
+  src: url('../fonts/lato/Lato-Lig.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* General */
+/* .................................... */
+html, body {
+  height:100%;
+  margin:0; padding:0;
+  font-family: 'Lato Light', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #5a5a5a;
+}
+
+#floater {
+  height:50%;
+  min-height: 185px;
+  position: relative;
+}
+
+#container {
+  width: 960px; height: 300px;
+  margin: -150px auto 0 auto;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+
+#login-container {
+  width: 960px; height: 370px;
+  margin: -185px auto 0 auto;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+
+#container h1, #login-container h1 {
+  font-size: 44px;
+  font-family: 'Helvetica Neue';
+  font-weight: bold;
+}
+
+#container p, #login-container p {
+  line-height: 150%;
+}
+
+#buttons {
+  text-align: center;
+  margin: 45px 0;
+}
+
+.button {
+  margin: 0 10px 0 10px; padding: 14px 28px;
+  text-decoration: none;
+  font-size: 16px; font-family: 'Lato';
+  background: #2BA6CB; color: #FFF;
+  border: none;
+  box-shadow: 1px 1px 0px #5a5a5a;
+}
+
+#about a {
+  text-decoration: none;
+  color: #2BA6CB;
+}
+
+/* index.html */
+/* .................................... */
+#logo {
+    width: 920px;
+}
+
+/* student.html/professor.html */
+/* .................................... */
+.login-form input[type="text"] {
+  width: 100%;
+  margin: 10px 0 0 0; padding: 6px 8px;
+  font-family: 'Lato Light'; font-size: 14px;
+  border: 1px solid #CCC;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  color: rgba(0,0,0,0.75);
+
+  -webkit-appearance: none;
+  transition: box-shadow 0.45s, border-color 0.45s ease-in-out;
+}
+
+.login-form input[type="text"]:focus {
+  background: #fafafa;
+  border-color: #999999;
+  box-shadow: 0 0 5px #999999;
+  outline: none;
+}

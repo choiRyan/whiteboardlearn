@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    
+
     <title>Whiteboard</title>
 
-    <link rel="stylesheet" href="stylesheets/page_styles.css">
-    
+    <link rel="stylesheet" href="stylesheets/base.css">
+
     <script src="javascripts/vendor/custom.modernizr.js"></script>
 
     <!-- Icons -->
@@ -28,8 +28,8 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
 	<!-- for non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
 	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
-    
-    
+
+
     <meta http-equiv="refresh" content="3; url=/" />
 
 </head>
@@ -50,15 +50,15 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $("body").css("display", "none");
-     
+
         $("body").fadeIn(1000);
-     
+
         $("a.transition").click(function(event){
             event.preventDefault();
             linkLocation = this.href;
-            $("body").fadeOut(500, redirectPage);      
+            $("body").fadeOut(500, redirectPage);
         });
-             
+
         function redirectPage() {
             window.location = linkLocation;
         }

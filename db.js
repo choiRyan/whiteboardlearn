@@ -6,7 +6,7 @@ var Whiteboard = new Schema({
 	name : String,
 	students : Number,
 	ccq : Number,
-	cq : [{id:Number, q:String, o1:String, o2:String, o3:String, o4:String, r1:Number, r2:Number, r3:Number, r4:Number}], 
+	cq : [{id:Number, q:String, o1:String, o2:String, o3:String, o4:String, r1:Number, r2:Number, r3:Number, r4:Number}],
 	//clicker questions : question options responseCount
 	sq : [{ q:String, ups:Number}],
 	//student questions : question, upvotes

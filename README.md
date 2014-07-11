@@ -1,13 +1,14 @@
 Whiteboard
 ==========
 
-Project from the AT&T "Internet of Things" Hackathon
+Project from the AT&T "Internet of Things" Hackathon, November 15-16, 2013
+http://developerboards.att.lithium.com/t5/AT-T-Developer-Program-Blogs/AT-amp-T-Intel-quot-Internet-of-Things-quot-Hackathon-Event/ba-p/37267
 
 Ryan Choi - Back-end
 
-Ryan Hsu - Web Dev, Front-End
+Stephen Chen - Design, Front-end
 
-Stephen Chen - UI/UX
+Ryan Hsu - Web Dev, Front-end
 
 Izzy Benavente - Front-end
 

@@ -3,18 +3,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    
-    <title>Whiteboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="stylesheets/foundation.css" type="text/css">
-    <link rel="stylesheet" href="stylesheets/page_styles.css" type="text/css">
-    
-    <script src="javascripts/vendor/custom.modernizr.js" type="text/javascript"></script>
+  <title>Whiteboard</title>
 
-    <!-- Icons -->
-    <link rel="icon" type="image/ico" href="images/favicon.ico">
+  <link rel="stylesheet" href="stylesheets/login.css" type="text/css">
+
+  <script src="javascripts/vendor/custom.modernizr.js" type="text/javascript"></script>
+
+  <!-- Icons -->
+  <link rel="icon" type="image/ico" href="images/favicon.ico">
 	<!-- for iPad with high-resolution Retina display running iOS ≥ 7: -->
 	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/apple-touch-icon-152x152-precomposed.png">
 	<!-- for iPad with high-resolution Retina display running iOS ≤ 6: -->
@@ -29,41 +28,20 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72x72-precomposed.png">
 	<!-- for non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
 	<link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
-    
 </head>
 
 <body>
-    <div id="floater"></div>
-    <div id="vcontent">
-        <content id="container">
-            <img id="logo" src="images/whiteboard_logo.png">
-            <div id="button-container">
-                <a class="button transition" href="/student">I'm a Student</a>
-                <a class="button transition" href="/professor">I'm a Professor</a>
-            </div>
-            <p><a class="transition" href="/whatis">What is Whiteboard?</a></p>
-        </content>
-    </div>
-</body>
 
-	<!-- jQuery -->
-	<script src="javascripts/jquery-1.10.2.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("body").css("display", "none");
-     
-        $("body").fadeIn(1000);
-     
-        $("a.transition").click(function(event){
-            event.preventDefault();
-            linkLocation = this.href;
-            $("body").fadeOut(500, redirectPage);      
-        });
-             
-        function redirectPage() {
-            window.location = linkLocation;
-        }
-    });
-    </script>
+  <div id="floater"></div>
+  <content id="container">
+    <img id="logo" src="images/whiteboard_logo.png">
+    <div id="buttons">
+      <a class="button" href="/student">I'm a Student</a>
+      <a class="button" href="/professor">I'm a Professor</a>
+    </div>
+    <div id="about"><a href="/whatis">What is Whiteboard?</a></div>
+  </content>
+
+</body>
 
 </html>

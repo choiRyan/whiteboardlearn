@@ -7,7 +7,7 @@ var path = require('path');
 var app = express();
 var engine = require('ejs-locals');
 var mongoose = require( 'mongoose' );
-var Whiteboard = mongoose.model( 'Whiteboard' ); 
+var Whiteboard = mongoose.model( 'Whiteboard' );
 var cookiesessions = require('cookie-sessions');
 
 // all environments
@@ -23,7 +23,7 @@ io.sockets.on('connection',function(socket){
 		console.log('socket error ' + err);
 		socket.destroy();
 	    });
-	
+
 	//listens for requests for the latest clicker question
 	socket.on('getLatestClickerQ', function(data){
 		Whiteboard.findOne({code:data.code},function(err,out){
@@ -33,7 +33,7 @@ io.sockets.on('connection',function(socket){
 			}else{console.log("Out is null?");}
 		    });
 	    });
-	
+
 	//listens for new responses to latest question from students
 	socket.on('answerClickerQ',function(data){ // contains code, cqIndex(the index), and choice (1~4)
 	        Whiteboard.findOne({code:data.code},function(err,out){
@@ -59,16 +59,16 @@ io.sockets.on('connection',function(socket){
 						});
 					}
 				    });
-			    
+
 			}else{console.log("Out is null?");}
 		    });
 	    });
-	
+
 	//listens for new clicker questions sent from prof
 	socket.on('sendClickerQ',function(data){
 		Whiteboard.findOne({code:data.code},function(err,out){
 			if(err)console.log("ERROR: "+err);
-			else if(out != null){ 
+			else if(out != null){
 			    Whiteboard.findOneAndUpdate({code:data.code},{$push: {cq:{q:data.q, id: out.ccq, o1:data.o1, o2:data.o2, o3:data.o3, o4:data.o4,r1:0, r2:0, r3:0, r4:0}}},{upsert:false},function(er){
 				    if(er){
 					console.log("ERROR" + er);
@@ -88,9 +88,9 @@ io.sockets.on('connection',function(socket){
 				    }
 				});
 			}
-		    });	
+		    });
 	    });
-	
+
 	//listens for feedback submissions from students, add feedback, update.
 	//{code:String,tIndex:String,d:Number}
 	socket.on('submitFeedback',function(data){
@@ -136,7 +136,7 @@ io.sockets.on('connection',function(socket){
 
 	//listens for new access queries for student Q viewing
 	socket.on('getStudentQuestions', function(data){
-		var ccode = data.code;		
+		var ccode = data.code;
 		//look up Qs from mongoDB
 		Whiteboard.findOne({code:ccode}).exec(function(err,out){
 			if(err){
@@ -186,7 +186,7 @@ io.sockets.on('connection',function(socket){
 			else{ //if out is somehow null
 			    console.log('ERROR out is null, line 60, app.js');
 			}
-		    });	
+		    });
 	    });
     });
 
@@ -198,9 +198,9 @@ app.use(express.cookieParser('this is in fact a string thing that prevents manip
 app.use(express.cookieSession({
 	    cookie:{
 		secret:'this is in fact a string thing thats prevents manip.',
-		    path:'/', 
+		    path:'/',
 		    maxAge: 86400000 // expires after 24 hrs (24*60*60*1000)
-		    
+
 	    }
 	}));
 app.use(express.bodyParser());
@@ -226,13 +226,13 @@ app.get('/logout', function(req,res){
     });
 app.get('/contact_us',function(req,res){res.redirect('contact_us.html')});
 
-//Gives all student-submitted questions 
+//Gives all student-submitted questions
 app.get('/getStudentQuestions', function(req,res){
 	var code = req.code;
 	Whiteboard.findOne({code:req.code}).exec(function(err, out){
-		if(err)return console.log("ERROR: " + err);	
+		if(err)return console.log("ERROR: " + err);
 	return out.sq;
-	    });	
+	    });
     });
 
 app.get('/', function(req,res){
@@ -327,7 +327,7 @@ app.get('/student_topics', function(req,res){
 	    res.render('student', {session:req.session});
 	}
     });
-app.get('/student_clicker', function(req,res){	
+app.get('/student_clicker', function(req,res){
 	if(req.cookies.student == '1' && req.cookies.loggedin == '1'){
 	    req.session.msg = "";
 	    res.render('student_clicker', {session:req.session});
