@@ -1,120 +1,68 @@
 <!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Whiteboard: Student-Clicker</title>
+  <title>Whiteboard: Professor</title>
 
-  
-    <link rel="stylesheet" href="stylesheets/foundation.css">
-    <link rel="stylesheet" href="stylesheets/base.css">
+  <link rel="stylesheet" href="stylesheets/style.css">
 
   <script src="javascripts/vendor/custom.modernizr.js"></script>
-
 </head>
 <body>
 
-	<nav class="top-bar">
-	  <ul class="title-area">
-	    <li class="name">
-	    	<ul><a href="#"><img src="images/header.png" id="header"></a></div></ul>
-	    </li>
-        <li class="toggle-topbar menu-icon"><a href="/logout"><span>Menu</span></a></li>
-	  </ul>
-
-	    <section class="top-bar-section">
-		    <!-- Left Nav Section -->
-		    <ul class="right">
-		    	<li class="divider"></li>
-			    <li style="text-align:center"><a href="/logout" id ="exit">Exit Session</a></li>	
-				<li class="divider"></li>  
-		 	</ul>
-	 	</section>
+	<nav id="header">
+		<section>
+		  <ul class="nav-list">
+	    	<a id="logo" href="#"><li><img src="images/header.png" alt="Whiteboard Learning"></li></a>
+				<li id="sessionname"><h1><%= session.name %></h1></li>
+				<li id="sessioncode">
+					<% if(session.code) { %>
+						Class Code: <span><%= session.code %></span>
+					<% } %>
+				</li>
+			  <a id="exit" href="/logout"><li>Exit Session</li></a>
+			</ul>
+		</section>
 	</nav>
 
-	<div class="row">
-		<div class="large-4 columns leftrow">
-			<h3><%= session.name %></h3>
-			<% if(session.code){ %>
-			<p class="center">Class code: <i><%= session.code  %></i></p></p><% } %>
-			<hr />
-			<div class="panel">
-				<ul class="side-nav">
-				  <h3><li><a href="/teacher_clicker">Clicker</a></li></h3>
-				  <p>Create another quiz or view quiz results.</p>
-				  <h3><li><a href="/teacher_topics">Topics</a></li></h3>
-				  <p>View students' understanding of topics.</p>
-				  <h3><li><a href="/teacher_questions">Questions</a></li></h3>
-				  <p>See student questions.</p>
-				</ul>
-			</div>
-		</div>
-<div class="large-8 columns">
-			
-			<div class="row">
-				<div class="large-12 columns rightrow">	
-						<hr />	
-						<h1 class="filler_txt">Choose an option on the left.</h1>
-                        <img src="images/ani_icon_1.png" class="filler">
-				</div>
-			</div>
-	<hr />
-	<!--Bottom Bar of information-->
-	<div class="row">
-		<div class="large-12 columns">
-			<p style="text-align:center">2013 Whiteboard Learning &#153; &sdot; <a href="contact_us.html">Contact Us</a></p>
-		</div>
-	</div>
-	</div>
+	<section id="content">
+		<section>
+			<section class="quadrants">
+				<section id="quadrant-clicker" class="quadrant"> <!-- href="/teacher_clicker" -->
+					<div class="quadrant-contents">
+						<h2>Clicker</h2>
+						<p>Create another quiz or view quiz results.</p>
+					</div>
+				</section>
+				<section id="quadrant-topics" class="quadrant"> <!-- href="/teacher_topics" -->
+					<div class="quadrant-contents">
+						<h2>Topics</h2>
+						<p>View students' understanding of topics.</p>
+					</div>
+				</section>
+				<section id="quadrant-questions" class="quadrant"> <!-- href="/teacher_questions" -->
+					<div class="quadrant-contents">
+						<h2>Questions</h2>
+						<p>See student questions.</p>
+					</div>
+				</section>
+				<section id="quadrant-blank" class="quadrant">
+					<div class="quadrant-contents">
+						<img src="images/icon.png" alt="Whiteboard Learning">
+					</div>
+				</section>
+			</section>
+		</section>
+	</section>
 
+	<footer id="footer">
+		<section>
+			&copy; 2014 Whiteboard Learning
+		</section>
+	</footer>
 
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
-  '.js><\/script>')
-  </script>
-  
-  <script src="javascripts/foundation.min.js"></script>
-  <!--
-  
-  <script src="js/foundation/foundation.js"></script>
-  
-  <script src="js/foundation/foundation.alerts.js"></script>
-  
-  <script src="js/foundation/foundation.clearing.js"></script>
-  
-  <script src="js/foundation/foundation.cookie.js"></script>
-  
-  <script src="js/foundation/foundation.dropdown.js"></script>
-  
-  <script src="js/foundation/foundation.forms.js"></script>
-  
-  <script src="js/foundation/foundation.joyride.js"></script>
-  
-  <script src="js/foundation/foundation.magellan.js"></script>
-  
-  <script src="js/foundation/foundation.orbit.js"></script>
-  
-  <script src="js/foundation/foundation.reveal.js"></script>
-  
-  <script src="js/foundation/foundation.section.js"></script>
-  
-  <script src="js/foundation/foundation.tooltips.js"></script>
-  
-  <script src="js/foundation/foundation.topbar.js"></script>
-  
-  <script src="js/foundation/foundation.interchange.js"></script>
-  
-  <script src="js/foundation/foundation.placeholder.js"></script>
-  
-  <script src="js/foundation/foundation.abide.js"></script>
-  
-  -->
-  
-  <script>
-    $(document).foundation();
-  </script>
 </body>
 </html>
